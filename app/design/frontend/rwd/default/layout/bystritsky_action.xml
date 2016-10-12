@@ -1,0 +1,8 @@
+<?xml version="1.0" ?>
+<layout>
+    <bystritsky_action_index_index>
+        <reference name="content">
+            <block type="core/template" template="bystritsky_action/index.phtml" />
+        </reference>
+    </bystritsky_action_index_index>
+</layout>

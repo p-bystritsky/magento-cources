@@ -1,0 +1,30 @@
+<h1>Current actions</h1>
+<div class="action-actions">
+    <?php
+    $actions = Mage::registry('actions');
+    foreach ($actions as $action):
+    ?>
+    <div class="action-entity">
+        <div class="action-title">
+            <h2><?= $action['name'] ?></h2>
+        </div>
+        <div class="action-body">
+            <div class="action-description">
+                <?= $action['description'] ?>
+            </div>
+            <div class="action-start">
+                From: <span class="action-start-datetime"><?= $action['start_datetime'] ?></span>
+            </div>
+            <div class="action-end">
+                <?php if (!empty($action['end_datetime'])): ?>
+                    To: <span class="action-end-datetime"><?= $action['end_datetime'] ?></span>
+                    <?php else: ?>
+                    <br>
+                <?php endif; ?>
+
+            </div>
+        </div>
+        <?php endforeach; ?>
+    </div>
+</div>
+

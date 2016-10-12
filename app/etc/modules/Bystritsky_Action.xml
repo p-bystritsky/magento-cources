@@ -1,0 +1,8 @@
+<config>
+    <modules>
+        <Bystritsky_Action>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Bystritsky_Action>
+    </modules>
+</config>
