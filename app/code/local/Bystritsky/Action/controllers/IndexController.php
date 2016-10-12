@@ -4,10 +4,7 @@ class Bystritsky_Action_IndexController extends Mage_Core_Controller_Front_Actio
 {
     public function indexAction()
     {
-        /** @var Bystritsky_Action_Model_Resource_Action_Collection $actions */
-        $actions = Mage::getModel('bystritsky_action/action')->getCollection();
-        $actions->addFilter('is_active', '1')->setOrder('start_datetime', 'DESC');
-        Mage::register('actions', $actions);
+
         $this->loadLayout();
         $this->renderLayout();
     }

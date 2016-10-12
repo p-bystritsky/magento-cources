@@ -45,5 +45,10 @@
                 </setup>
             </action_setup>
         </resources>
+        <blocks>
+            <bystritsky_action>
+                <class>Bystritsky_Action_Block</class>
+            </bystritsky_action>
+        </blocks>
     </global>
 </config>

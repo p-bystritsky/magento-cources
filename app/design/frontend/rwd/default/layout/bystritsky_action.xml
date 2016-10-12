@@ -2,7 +2,7 @@
 <layout>
     <bystritsky_action_index_index>
         <reference name="content">
-            <block type="core/template" template="bystritsky_action/index.phtml" />
+            <block type="bystritsky_action/actions" template="bystritsky_action/index.phtml" />
         </reference>
     </bystritsky_action_index_index>
 </layout>

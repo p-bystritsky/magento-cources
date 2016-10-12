@@ -1,9 +1,9 @@
+<?php
+$actions = $this->getActionsCollection();
+?>
 <h1>Current actions</h1>
 <div class="action-actions">
-    <?php
-    $actions = Mage::registry('actions');
-    foreach ($actions as $action):
-    ?>
+    <?php foreach ($actions as $action): ?>
     <div class="action-entity">
         <div class="action-title">
             <h2><?= $action['name'] ?></h2>
@@ -18,7 +18,7 @@
             <div class="action-end">
                 <?php if (!empty($action['end_datetime'])): ?>
                     To: <span class="action-end-datetime"><?= $action['end_datetime'] ?></span>
-                    <?php else: ?>
+                <?php else: ?>
                     <br>
                 <?php endif; ?>
 
