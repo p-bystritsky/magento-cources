@@ -11,7 +11,7 @@ class Bystritsky_Action_Block_Actions extends Mage_Core_Block_Template
         $actions
             ->addFieldToFilter('is_active', '1')
             ->addFieldToFilter('start_datetime', ['lt' => Mage::getModel('core/date')->gmtDate()])
-            ->addFieldToFilter('end_datetime', [['gt' => Mage::getModel('core/date')->gmtDate()], 'Null'])
+            ->addFieldToFilter('end_datetime', [['gt' => Mage::getModel('core/date')->gmtDate()], ['null' => 'true']])
             ->setOrder('start_datetime', 'DESC');
         Mage::log((string) $actions->getSelect());
         return $actions;
