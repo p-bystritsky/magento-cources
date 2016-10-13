@@ -4,30 +4,50 @@
   border-color: silver;
   margin: 10px 20px;
 }
+
 .action-entity {
-  margin: 10px;
+  margin: 20px;
 }
+
 .action-title {
-  padding: 5px;
+  padding: 5px 5px 0px;
 }
+
 .action-body {
   padding: 0px 10px 0px;
 }
+
+.action-image {
+  margin: 10px;
+}
+
+.action-image-200px {
+  height: auto;
+  width: auto;
+  max-width: 200px;
+  max-height: 200px;
+}
+
 .action-description {
 
 }
+
 .start-end {
 
 }
+
 .action-start {
 
 }
+
 .action-start-datetime {
 
 }
+
 .action-end {
 
 }
+
 .action-end-datetime {
 
 }
