@@ -1,8 +1,31 @@
 <?xml version="1.0" ?>
 <layout>
     <bystritsky_action_index_index>
+        <reference name="root">
+            <action method="setTemplate">
+                <template>page/2columns-right.phtml</template>
+            </action>
+            <!--
+            <reference name="header">
+                <action method="addLink" translate="label title">
+                    <label>Custom Home Link</label>
+                    <url>home</url>
+                    <title>Custom Home Link</title>
+                    <prepare/>
+                    <urlParams/>
+                    <position>10</position>
+                </action>
+            </reference>
+            -->
+        </reference>
         <reference name="content">
-            <block type="bystritsky_action/actions" template="bystritsky_action/index.phtml" />
+            <block
+                    type="bystritsky_action/actions"
+                    template="bystritsky_action/index.phtml"
+                    name="bystritsky_actions"
+            />
         </reference>
     </bystritsky_action_index_index>
+
 </layout>
+

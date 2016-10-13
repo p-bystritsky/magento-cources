@@ -4,7 +4,6 @@ class Bystritsky_Action_IndexController extends Mage_Core_Controller_Front_Actio
 {
     public function indexAction()
     {
-
         $this->loadLayout();
         $this->renderLayout();
     }
