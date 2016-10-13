@@ -2,29 +2,35 @@
 <layout>
     <bystritsky_action_index_index>
         <reference name="head">
-            <action method="removeItem"><type>skin_js</type><name>js/slideshow.js</name></action>
-            <action method="removeItem"><type>skin_js</type><name>js/lib/jquery.cycle2.min.js</name></action>
-            <action method="removeItem"><type>skin_js</type><name>js/lib/jquery.cycle2.swipe.min.js</name></action>
-            <action method="removeItem"><type>skin_css</type><name>css/madisonisland.css</name></action>
-            <action method="removeItem"><type>skin_css</type><name>css/madisonisland-ie8.css</name></action>
-            <action method="removeItem"><type>link_rel</type><name>//fonts.googleapis.com/css?family=Raleway:300,400,500,700,600</name></action>
+            <action method="removeItem">
+                <type>skin_js</type>
+                <name>js/slideshow.js</name>
+            </action>
+            <action method="removeItem">
+                <type>skin_js</type>
+                <name>js/lib/jquery.cycle2.min.js</name>
+            </action>
+            <action method="removeItem">
+                <type>skin_js</type>
+                <name>js/lib/jquery.cycle2.swipe.min.js</name>
+            </action>
+            <action method="removeItem">
+                <type>skin_css</type>
+                <name>css/madisonisland.css</name>
+            </action>
+            <action method="removeItem">
+                <type>skin_css</type>
+                <name>css/madisonisland-ie8.css</name>
+            </action>
+            <action method="removeItem">
+                <type>link_rel</type>
+                <name>//fonts.googleapis.com/css?family=Raleway:300,400,500,700,600</name>
+            </action>
         </reference>
         <reference name="root">
             <action method="setTemplate">
                 <template>page/2columns-right.phtml</template>
             </action>
-            <!--
-            <reference name="header">
-                <action method="addLink" translate="label title">
-                    <label>Custom Home Link</label>
-                    <url>home</url>
-                    <title>Custom Home Link</title>
-                    <prepare/>
-                    <urlParams/>
-                    <position>10</position>
-                </action>
-            </reference>
-            -->
         </reference>
         <reference name="content">
             <block
@@ -34,6 +40,5 @@
             />
         </reference>
     </bystritsky_action_index_index>
-
 </layout>
 

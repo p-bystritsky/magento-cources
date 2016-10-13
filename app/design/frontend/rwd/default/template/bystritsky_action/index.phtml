@@ -1,6 +1,7 @@
-<?php
-$actions = $this->getActionsCollection();
-?>
+<?php $actions = $this->getActionsCollection(); ?>
+<div class="action-pager">
+    <?= $this->getPagerHtml(); ?>
+</div>
 <h1>Current actions</h1>
 <div class="action-actions">
     <?php foreach ($actions as $action): ?>
@@ -31,4 +32,6 @@ $actions = $this->getActionsCollection();
         </div>
     <?php endforeach; ?>
 </div>
-
+<div class="action-pager">
+    <?= $this->getPagerHtml(); ?>
+</div>
