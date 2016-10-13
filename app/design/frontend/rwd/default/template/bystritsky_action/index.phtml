@@ -12,15 +12,17 @@ $actions = $this->getActionsCollection();
                 <div class="action-description">
                     <?= $action['description'] ?>
                 </div>
-                <div class="action-start">
-                    From: <span class="action-start-datetime"><?= $action['start_datetime'] ?></span>
-                </div>
-                <div class="action-end">
-                    <?php if (!empty($action['end_datetime'])): ?>
-                        To: <span class="action-end-datetime"><?= $action['end_datetime'] ?></span>
-                    <?php else: ?>
-                        <br>
-                    <?php endif; ?>
+                <div class="start-end">
+                    <div class="action-start">
+                        From: <span class="action-start-datetime"><?= $action['start_datetime'] ?></span>
+                    </div>
+                    <div class="action-end">
+                        <?php if (!empty($action['end_datetime'])): ?>
+                            To: <span class="action-end-datetime"><?= $action['end_datetime'] ?></span>
+                        <?php else: ?>
+                            <br>
+                        <?php endif; ?>
+                    </div>
                 </div>
             </div>
         </div>
