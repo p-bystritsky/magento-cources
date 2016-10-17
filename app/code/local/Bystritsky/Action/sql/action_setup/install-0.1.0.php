@@ -16,7 +16,7 @@ $installer->run("
       PRIMARY KEY  (`id`)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
     
-    INSERT INTO `{$installer->getTable('bystritsky_action/action')}` (`id`, `name`, `is_active`, `description`, `short description`, `image`, `create_datetime`, `start_datetime`, `end_datetime`) VALUES
+    INSERT INTO `{$installer->getTable('bystritsky_action/action')}` (`id`, `name`, `is_active`, `description`, `short_description`, `image`, `create_datetime`, `start_datetime`, `end_datetime`) VALUES
 (1, 'Длинная акция', 1, 'Это очень длинная акция. Она началась давно и продлится ещё долго.', 'Это очень длинная акция.', 'http://cdn.iwillteachyoutoberich.com/wp-content/uploads/2008/11/generic-candy.jpg', '2016-10-11 09:43:05', '2016-09-05 21:00:00', '2017-07-13 21:00:00'),
 (2, 'Прошедшая акция', 1, 'Эта акция уже прошла. Да.', 'Эта акция уже прошла.', 'http://www.savingadvice.com/articles/wp-content/uploads/2012/04/generic.jpg', '2016-10-11 09:43:05', '2016-10-01 21:00:00', '2016-10-03 21:00:00'),
 (3, 'Бесконечная акция', 1, 'Есть у акции начало, нет у акции конца.', 'Есть начало, нет конца.', 'http://blogs-images.forbes.com/peterubel/files/2015/03/Millions-to-Be-Made-on-Generic-Drugs.jpg', '2016-10-01 21:00:00', '2016-10-01 21:00:00', NULL),
