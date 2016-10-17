@@ -17,7 +17,7 @@ class Bystritsky_Action_Block_Actions extends Mage_Catalog_Block_Product_Abstrac
             ->setPageSize($limit)
             ->setCurPage($page)
             ->setOrder('start_datetime', 'DESC');
-        Mage::log((string) $actions->getSelect());
+        //Mage::log((string) $actions->getSelect());
         return $actions;
     }
 

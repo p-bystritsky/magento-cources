@@ -8,32 +8,13 @@ class Bystritsky_Action_IndexController extends Mage_Core_Controller_Front_Actio
         $this->renderLayout();
     }
 
-    public function showAction()
+    public function viewAction()
     {
-        $params = $this->getRequest()->getParams();
-        $action = Mage::getModel('bystritsky_action/action');
-        echo("Loaded model " . get_class($action));
-        echo("<br>Loading the action with an ID of " . $params['id']);
-        $action->load($params['id']);
-        $data = $action->getData();
-        var_dump($data);
-    }
-
-    public function newAction()
-    {
-        $blogpost = Mage::getModel('bystritsky_action/action');
-        $blogpost->setTitle('Code Post!');
-        $blogpost->setPost('This post was created from code!');
-        $blogpost->save();
-        echo 'post with ID ' . $blogpost->getId() . ' created';
-    }
-
-    public function showAllAction()
-    {
-        $actions = Mage::getModel('bystritsky_action/action')->getCollection();
-        foreach ($actions as $action) {
-            echo '<h3>' . $action->getName() . '</h3>';
-            echo nl2br($action->getDescription());
+        $id = $this->getRequest()->getParam('id');
+        if (empty($id)) {
+            $this->_redirect('*/*/index');
         }
+        $this->loadLayout();
+        $this->renderLayout();
     }
 }

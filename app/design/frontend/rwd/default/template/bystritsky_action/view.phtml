@@ -1,0 +1,36 @@
+<?php $action = $this->getAction(); ?>
+<div class="action-actions">
+    <div class="action-entity">
+        <div class="action-title">
+            <h2><?= $action['name'] ?></h2>
+        </div>
+        <div class="action-body">
+            <div class="action-short-description">
+                <?= $action['short description'] ?>
+            </div>
+            <div class="action-description">
+                <div class="action-image">
+                    <img class="action-image-300px" src="<?= $action['image'] ?>">
+                </div>
+                <?= $action['description'] ?>
+            </div>
+            <div class="start-end">
+                <div class="action-created">
+                    Created: <span class="action-created-datetime"><?= $action['create_datetime'] ?></span>
+                </div>
+                <div class="action-start">
+                    From: <span class="action-start-datetime"><?= $action['start_datetime'] ?></span>
+                </div>
+                <div class="action-end">
+                    <?php if (!empty($action['end_datetime'])): ?>
+                        To: <span class="action-end-datetime"><?= $action['end_datetime'] ?></span>
+                    <?php else: ?>
+                        <br>
+                    <?php endif; ?>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

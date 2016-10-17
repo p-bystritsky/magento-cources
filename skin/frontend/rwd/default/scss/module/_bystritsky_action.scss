@@ -4,9 +4,12 @@
   border-color: silver;
   margin: 10px 20px;
   width: 100%;
+  overflow: hidden;
+  height: auto;
 }
 
 .action-entity {
+  height: auto;
   margin: 20px;
 }
 
@@ -16,6 +19,7 @@
 
 .action-body {
   padding: 0px 10px 0px;
+  height: auto;
 }
 
 .action-image {
@@ -29,8 +33,24 @@
   max-height: 200px;
 }
 
-.action-description {
+.action-image-300px {
+  height: auto;
+  width: auto;
+  margin-right: 20px;
+  margin-bottom: 20px;
+  max-width: 300px;
+  max-height: 300px;
+  float: left;
+  overflow: hidden;
+}
 
+.action-short-description {
+  text-align: justify;
+  margin: 10px 0px;
+}
+
+.action-description {
+  text-align: justify;
 }
 
 .start-end {

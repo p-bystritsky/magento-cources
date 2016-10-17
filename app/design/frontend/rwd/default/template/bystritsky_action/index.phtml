@@ -7,14 +7,14 @@
     <?php foreach ($actions as $action): ?>
         <div class="action-entity">
             <div class="action-title">
-                <h2><?= $action['name'] ?></h2>
+                <a href="<?= Mage::getUrl('*/*/view/id/' . $action['id']);?>"><h2><?= $action['name'] ?></h2></a>
             </div>
             <div class="action-image">
                 <img class="action-image-200px" src="<?= $action['image'] ?>">
             </div>
             <div class="action-body">
-                <div class="action-description">
-                    <?= $action['description'] ?>
+                <div class="action-short-description">
+                    <?= $action['short description'] ?>
                 </div>
                 <div class="start-end">
                     <div class="action-start">
