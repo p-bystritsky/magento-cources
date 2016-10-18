@@ -47,9 +47,9 @@ class Bystritsky_Action_Block_Adminhtml_Actions_Edit_Form extends Mage_Adminhtml
             'name' => 'description'
         ]);
 
-        $fieldset->addField('image', 'text', [
+        $fieldset->addField('image', 'image', [
             'label' => $helper->__('Image'),
-            'required' => true,
+            'required' => false,
             'name' => 'image',
         ]);
 
@@ -83,9 +83,12 @@ class Bystritsky_Action_Block_Adminhtml_Actions_Edit_Form extends Mage_Adminhtml
 
 
         $form->setUseContainer(true);
-
+        $formData = array_merge($model->getData(), ['image' => $model->getImageUrl()]);
+        $form->setValues($formData);
+        /*
         if ($data = Mage::getSingleton('adminhtml/session')->getFormData()) {
             $form->setValues($data);
+            //$form->setValues($model->getData());
         } else {
             $form->setValues($model->getData());
             /*
@@ -95,8 +98,10 @@ class Bystritsky_Action_Block_Adminhtml_Actions_Edit_Form extends Mage_Adminhtml
                         Mage::getModel('core/date')->date($format)
                 ]
             );
-            */
+
         }
+*/
+
 
         return parent::_prepareForm();
     }

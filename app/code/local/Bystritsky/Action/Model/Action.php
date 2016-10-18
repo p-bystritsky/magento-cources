@@ -22,4 +22,21 @@ class Bystritsky_Action_Model_Action extends Mage_Core_Model_Abstract
         return parent::load($id, $field);
     }
 
+
+    protected function _afterDelete()
+    {
+        $helper = Mage::helper('bystritsky_action');
+        @unlink($helper->getImagePath($this->getId()));
+        return parent::_afterDelete();
+    }
+
+    public function getImageUrl()
+    {
+        $helper = Mage::helper('bystritsky_action');
+        if ($filename = $this->getImage()) {
+            return $helper->getImageUrl($filename);
+        }
+        return null;
+    }
+
 }

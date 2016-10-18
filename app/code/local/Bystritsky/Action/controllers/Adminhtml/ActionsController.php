@@ -30,20 +30,28 @@ class Bystritsky_Action_Adminhtml_ActionsController extends Mage_Adminhtml_Contr
 
     public function saveAction()
     {
+        $id = $this->getRequest()->getParam('id');
         if ($data = $this->getRequest()->getPost()) {
             try {
-                $data = $this->_filterDateTime($data, ['create_datetime', 'start_datetime', 'end_datetime']);
+                $helper = Mage::helper('bystritsky_action');
                 $model = Mage::getModel('bystritsky_action/action');
-                $model->setData($data)->setId($this->getRequest()->getParam('id'));
-
-                /*
-                 if (!$model->getCreateDatetime()) {
-                     $model->setCreateDatetime(now());
-                 }
-                */
-
+                $model->load($id);
+                $model->addData($data)->setId($id);
+                if (isset($_FILES['image']['name']) && $_FILES['image']['name'] != '') {
+                    $uploader = new Varien_File_Uploader('image');
+                    $filename = $helper->generateImageFilename($_FILES['image']['name']);
+                    $uploader->setAllowedExtensions(['jpg', 'jpeg', 'png', 'bmp', 'gif']);
+                    $uploader->setAllowRenameFiles(false);
+                    $uploader->setFilesDispersion(false);
+                    $uploader->save($helper->getImagePath(), $filename); // Upload the image
+                    $model->addData(['image' => $filename]);
+                } elseif (isset($data['image']['delete']) && $data['image']['delete'] == 1) {
+                    $data['image'] = null;
+                    $model->addData(['image' => null]);
+                } elseif (isset($data['image']['value'])) {
+                    $model->addData(['image' => $data['image']['value']]);
+                }
                 $model->save();
-
 
                 Mage::getSingleton('adminhtml/session')->addSuccess($this->__('Action was saved successfully'));
                 Mage::getSingleton('adminhtml/session')->setFormData(false);
@@ -52,7 +60,7 @@ class Bystritsky_Action_Adminhtml_ActionsController extends Mage_Adminhtml_Contr
                 Mage::getSingleton('adminhtml/session')->addError($e->getMessage());
                 Mage::getSingleton('adminhtml/session')->setFormData($data);
                 $this->_redirect('*/*/edit', [
-                    'id' => $this->getRequest()->getParam('id')
+                    'id' => $id
                 ]);
             }
             return;
@@ -61,7 +69,9 @@ class Bystritsky_Action_Adminhtml_ActionsController extends Mage_Adminhtml_Contr
         $this->_redirect('*/*/');
     }
 
-    public function deleteAction()
+
+    public
+    function deleteAction()
     {
         if ($id = $this->getRequest()->getParam('id')) {
             try {
@@ -75,7 +85,8 @@ class Bystritsky_Action_Adminhtml_ActionsController extends Mage_Adminhtml_Contr
         $this->_redirect('*/*/');
     }
 
-    public function massDeleteAction()
+    public
+    function massDeleteAction()
     {
         $actions = $this->getRequest()->getParam('actions', null);
 
@@ -89,7 +100,7 @@ class Bystritsky_Action_Adminhtml_ActionsController extends Mage_Adminhtml_Contr
                 $this->_getSession()->addError($e->getMessage());
             }
         } else {
-            $this->_getSession()->addError($this->__('Please select news'));
+            $this->_getSession()->addError($this->__('Please select actions'));
         }
         $this->_redirect('*/*');
     }
