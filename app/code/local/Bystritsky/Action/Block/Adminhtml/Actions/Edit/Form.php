@@ -56,7 +56,7 @@ class Bystritsky_Action_Block_Adminhtml_Actions_Edit_Form extends Mage_Adminhtml
         $fieldset->addField('create_datetime', 'date', [
             'time' => true,
             'format' => $format,
-            //'input format' => 'Y-m-d H:i:s',
+            'input_format' =>  $format,
             'image' => $this->getSkinUrl('images/grid-cal.gif'),
             'label' => $helper->__('Created'),
             'required' => true,

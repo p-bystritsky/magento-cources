@@ -27,7 +27,7 @@ class Bystritsky_Action_Helper_Data extends Mage_Core_Helper_Abstract
     {
         $base = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . 'bystritsky_action/';
         if ($filename) {
-            return $base . $filename ;
+            return $base . $filename;
         } else {
             return null;
         }
@@ -36,5 +36,10 @@ class Bystritsky_Action_Helper_Data extends Mage_Core_Helper_Abstract
     public function getFilename($url)
     {
         return array_reverse(explode('/', $url))[0];
+    }
+
+    public function toLocalTime($dateTime)
+    {
+
     }
 }
