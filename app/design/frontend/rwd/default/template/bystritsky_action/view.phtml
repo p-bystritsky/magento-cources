@@ -1,4 +1,7 @@
-<?php $action = $this->getAction(); ?>
+<?php
+$action = $this->getAction();
+$helper = Mage::helper('bystritsky_action');
+?>
 <div class="action-actions">
     <div class="action-entity">
         <div class="action-title">
@@ -6,12 +9,14 @@
         </div>
         <div class="action-body">
             <div class="action-short-description">
-                <?= $action['short description'] ?>
+                <?= $action['short_description'] ?>
             </div>
             <div class="action-description">
+                <?php if ($url = $helper->getImageUrl($action['image'])): ?>
                 <div class="action-image">
-                    <img class="action-image-300px" src="<?= $action['image'] ?>">
+                    <img class="action-image-300px" src="<?= $url ?>">
                 </div>
+                <?php endif; ?>
                 <?= $action['description'] ?>
             </div>
             <div class="start-end">
