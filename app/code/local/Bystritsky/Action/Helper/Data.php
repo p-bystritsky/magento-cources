@@ -27,9 +27,14 @@ class Bystritsky_Action_Helper_Data extends Mage_Core_Helper_Abstract
     {
         $base = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . 'bystritsky_action/';
         if ($filename) {
-            return $base . DS .  $filename ;
+            return $base . $filename ;
         } else {
             return $base;
         }
+    }
+
+    public function getFilename($url)
+    {
+        return array_reverse(explode('/', $url))[0];
     }
 }

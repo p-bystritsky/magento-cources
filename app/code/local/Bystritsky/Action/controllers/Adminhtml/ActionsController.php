@@ -49,7 +49,7 @@ class Bystritsky_Action_Adminhtml_ActionsController extends Mage_Adminhtml_Contr
                     $data['image'] = null;
                     $model->addData(['image' => null]);
                 } elseif (isset($data['image']['value'])) {
-                    $model->addData(['image' => $data['image']['value']]);
+                    $model->addData(['image' => $helper->getFileName($data['image']['value'])]);
                 }
                 $model->save();
 
