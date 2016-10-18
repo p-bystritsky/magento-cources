@@ -18,14 +18,14 @@ class Bystritsky_Action_Block_Actions extends Mage_Catalog_Block_Product_Abstrac
             ->setCurPage($page)
             ->setOrder('start_datetime', 'DESC');
         //Mage::log((string) $actions->getSelect());
-        return $actions;
+        return $this->dirtyHack($actions);
     }
 
     protected function _prepareLayout()
     {
         parent::_prepareLayout();
         $pager = $this->getLayout()->createBlock('page/html_pager', 'custom.pager');
-        $pager->setAvailableLimit([10 => 10, 20 => 20, 'all'=>'all']);
+        $pager->setAvailableLimit([10 => 10, 20 => 20, 'all' => 'all']);
         $pager->setCollection($this->getActionsCollection());
         $this->setChild('pager', $pager);
         return $this;
@@ -34,5 +34,22 @@ class Bystritsky_Action_Block_Actions extends Mage_Catalog_Block_Product_Abstrac
     public function getPagerHtml()
     {
         return $this->getChildHtml('pager');
+    }
+
+    private function dirtyHack($collection)
+    {
+        $timeFields = ['create_datetime', 'start_datetime', 'end_datetime'];
+        foreach ($collection as $element) {
+            foreach ($timeFields as $field) {
+                if ($raw = $element->getData($field)) {
+                    $time = Mage::getModel('core/date')->timestamp(strtotime($raw));
+                    //$dateTime = Mage::helper('core')->formatDate($raw, true);
+                    $dateTime = date("Y-m-d H:i:s", $time);
+                    $element->setData($field, date($dateTime));
+                }
+            }
+
+        }
+        return $collection;
     }
 }
