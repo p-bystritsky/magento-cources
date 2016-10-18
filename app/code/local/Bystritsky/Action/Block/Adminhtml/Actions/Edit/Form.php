@@ -56,7 +56,7 @@ class Bystritsky_Action_Block_Adminhtml_Actions_Edit_Form extends Mage_Adminhtml
         $fieldset->addField('create_datetime', 'date', [
             'time' => true,
             'format' => $format,
-            //'inputFormat' => 'Y-m-d H:i:s',
+            //'input format' => 'Y-m-d H:i:s',
             'image' => $this->getSkinUrl('images/grid-cal.gif'),
             'label' => $helper->__('Created'),
             'required' => true,
@@ -81,27 +81,9 @@ class Bystritsky_Action_Block_Adminhtml_Actions_Edit_Form extends Mage_Adminhtml
             'name' => 'end_datetime'
         ]);
 
-
         $form->setUseContainer(true);
         $formData = array_merge($model->getData(), ['image' => $model->getImageUrl()]);
         $form->setValues($formData);
-        /*
-        if ($data = Mage::getSingleton('adminhtml/session')->getFormData()) {
-            $form->setValues($data);
-            //$form->setValues($model->getData());
-        } else {
-            $form->setValues($model->getData());
-            /*
-            $form->addValues(
-                [
-                    'create_datetime'=>
-                        Mage::getModel('core/date')->date($format)
-                ]
-            );
-
-        }
-*/
-
 
         return parent::_prepareForm();
     }

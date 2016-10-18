@@ -70,8 +70,7 @@ class Bystritsky_Action_Adminhtml_ActionsController extends Mage_Adminhtml_Contr
     }
 
 
-    public
-    function deleteAction()
+    public function deleteAction()
     {
         if ($id = $this->getRequest()->getParam('id')) {
             try {
@@ -85,8 +84,7 @@ class Bystritsky_Action_Adminhtml_ActionsController extends Mage_Adminhtml_Contr
         $this->_redirect('*/*/');
     }
 
-    public
-    function massDeleteAction()
+    public function massDeleteAction()
     {
         $actions = $this->getRequest()->getParam('actions', null);
 

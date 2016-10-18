@@ -16,7 +16,8 @@ class Bystritsky_Action_Block_Adminhtml_Actions_Grid extends Mage_Adminhtml_Bloc
 
         $this->addColumn('id', [
             'header' => $helper->__('ID'),
-            'index' => 'id'
+            'index' => 'id',
+            'width' => '20'
         ]);
 
         $this->addColumn('name', [
@@ -35,13 +36,15 @@ class Bystritsky_Action_Block_Adminhtml_Actions_Grid extends Mage_Adminhtml_Bloc
             'header' => $helper->__('Active'),
             'index' => 'is_active',
             'type'      => 'options',
-            'options'   => ['no', 'yes']
+            'options'   => ['no', 'yes'],
+            'width' => '25'
         ]);
 
         $this->addColumn('image', [
             'header' => $helper->__('Image'),
             'index' => 'image',
-            'type' => 'text',
+            'type' => 'image',
+            'renderer' => 'Bystritsky_Action_Block_Adminhtml_Actions_Grid_Renderer_Image'
         ]);
 
         $this->addColumn('create_datetime', [
