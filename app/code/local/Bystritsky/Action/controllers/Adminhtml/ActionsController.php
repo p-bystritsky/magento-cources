@@ -39,12 +39,11 @@ class Bystritsky_Action_Adminhtml_ActionsController extends Mage_Adminhtml_Contr
                 $model->addData($data)->setId($id);
                 if (isset($_FILES['image']['name']) && $_FILES['image']['name'] != '') {
                     $uploader = new Varien_File_Uploader('image');
-                    $filename = $helper->generateImageFilename($_FILES['image']['name']);
                     $uploader->setAllowedExtensions(['jpg', 'jpeg', 'png', 'bmp', 'gif']);
-                    $uploader->setAllowRenameFiles(false);
+                    $uploader->setAllowRenameFiles(true);
                     $uploader->setFilesDispersion(false);
-                    $uploader->save($helper->getImagePath(), $filename); // Upload the image
-                    $model->addData(['image' => $filename]);
+                    $uploader->save($helper->getImagePath(), $_FILES['image']['name']); // Upload the image
+                    $model->addData(['image' => $uploader->getUploadedFileName()]);
                 } elseif (isset($data['image']['delete']) && $data['image']['delete'] == 1) {
                     $data['image'] = null;
                     $model->addData(['image' => null]);
