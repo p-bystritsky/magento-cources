@@ -80,7 +80,7 @@
         <jobs>
             <bystritsky_action_update_status>
                 <schedule>
-                    <cron_expr>* * * * *</cron_expr>
+                    <cron_expr>*/5 * * * *</cron_expr>
                 </schedule>
                 <run>
                     <model>bystritsky_action/action::updateStatus</model>
