@@ -1,7 +1,7 @@
 <config>
     <modules>
         <Bystritsky_Action>
-            <version>0.1.1</version>
+            <version>0.2.0</version>
         </Bystritsky_Action>
     </modules>
     <admin>
@@ -45,6 +45,9 @@
                     <action>
                         <table>bystritsky_action_actions</table>
                     </action>
+                    <dependency>
+                        <table>bystritsky_action_dependencies</table>
+                    </dependency>
                 </entities>
             </bystritsky_action_resource>
         </models>
