@@ -1,7 +1,7 @@
 <config>
     <modules>
         <Bystritsky_Action>
-            <version>0.1.0</version>
+            <version>0.1.1</version>
         </Bystritsky_Action>
     </modules>
     <admin>
@@ -76,4 +76,16 @@
             </bystritsky_action>
         </menu>
     </adminhtml>
+    <crontab>
+        <jobs>
+            <bystritsky_action_update_status>
+                <schedule>
+                    <cron_expr>* * * * *</cron_expr>
+                </schedule>
+                <run>
+                    <model>bystritsky_action/action::updateStatus</model>
+                </run>
+            </bystritsky_action_update_status>
+        </jobs>
+    </crontab>
 </config>

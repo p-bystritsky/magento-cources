@@ -40,6 +40,13 @@ class Bystritsky_Action_Block_Adminhtml_Actions_Grid extends Mage_Adminhtml_Bloc
             'width' => '25'
         ]);
 
+        $this->addColumn('status', [
+            'header' => $helper->__('Status'),
+            'index' => 'status',
+            'type'      => 'int',
+            'width' => '25'
+        ]);
+
         $this->addColumn('image', [
             'header' => $helper->__('Image'),
             'index' => 'image',

@@ -2,6 +2,10 @@
 
 class Bystritsky_Action_Model_Action extends Mage_Core_Model_Abstract
 {
+    const AWAITED = 0;
+    const ACTING = 1;
+    const COMPLITED = 2;
+
     private $timeFields = ['create_datetime', 'start_datetime', 'end_datetime'];
 
     protected function _construct()
@@ -63,6 +67,30 @@ class Bystritsky_Action_Model_Action extends Mage_Core_Model_Abstract
                 $this->setData($field, $time);
             }
         }
+
+        // cron job
+        $currentDatetime = Mage::getModel('core/date')->gmtTimestamp();
+        $startDatetime = $this->getStartDatetime();
+        $endDatetime = $this->getEndDatetime();
+
+        if ($startDatetime > $currentDatetime) {
+            $this->setStatus(self::AWAITED);
+        } elseif ($currentDatetime > $endDatetime) {
+            $this->setStatus(self::COMPLITED);
+        } else {
+            $this->setStatus(self::ACTING);
+        }
+
         return parent::save();
+    }
+
+    public function updateStatus() {
+        /**
+         * @var $collection Bystritsky_Action_Model_Action[]
+         */
+        $collection = Mage::getModel('bystritsky_action/action')->getCollection()->load();
+        foreach ($collection as $action) {
+            $action->save();
+        }
     }
 }
