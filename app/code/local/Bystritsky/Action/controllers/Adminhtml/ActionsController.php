@@ -21,9 +21,19 @@ class Bystritsky_Action_Adminhtml_ActionsController extends Mage_Adminhtml_Contr
     public function editAction()
     {
         $id = (int)$this->getRequest()->getParam('id');
-        Mage::register('current_action', Mage::getModel('bystritsky_action/action')->load($id));
+
+        $model = Mage::getModel('bystritsky_action/action');
+
+        if($data = Mage::getSingleton('adminhtml/session')->getFormData()){
+            $model->setData($data)->setId($id);
+        } else {
+            $model->load($id);
+        }
+
+        Mage::register('current_action', $model);
 
         $this->loadLayout()->_setActiveMenu('bystritsky_action');
+        $this->_addLeft($this->getLayout()->createBlock('bystritsky_action/adminhtml_actions_edit_tabs'));
         $this->_addContent($this->getLayout()->createBlock('bystritsky_action/adminhtml_actions_edit'));
         $this->renderLayout();
     }
