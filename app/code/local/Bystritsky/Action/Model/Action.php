@@ -75,7 +75,7 @@ class Bystritsky_Action_Model_Action extends Mage_Core_Model_Abstract
 
         if ($startDatetime > $currentDatetime) {
             $this->setStatus(self::AWAITED);
-        } elseif ($currentDatetime > $endDatetime) {
+        } elseif ($endDatetime && $currentDatetime > $endDatetime) {
             $this->setStatus(self::COMPLITED);
         } else {
             $this->setStatus(self::ACTING);
