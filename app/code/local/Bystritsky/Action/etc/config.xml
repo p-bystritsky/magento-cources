@@ -43,7 +43,7 @@
                 <class>Bystritsky_Action_Model_Resource</class>
                 <entities>
                     <action>
-                        <table>action_actions</table>
+                        <table>bystritsky_action_actions</table>
                     </action>
                 </entities>
             </bystritsky_action_resource>

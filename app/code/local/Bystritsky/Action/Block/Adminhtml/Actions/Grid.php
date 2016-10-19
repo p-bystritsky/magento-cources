@@ -17,7 +17,8 @@ class Bystritsky_Action_Block_Adminhtml_Actions_Grid extends Mage_Adminhtml_Bloc
         $this->addColumn('id', [
             'header' => $helper->__('ID'),
             'index' => 'id',
-            'width' => '20'
+            'width' => '20',
+            'type' => 'range'
         ]);
 
         $this->addColumn('name', [
