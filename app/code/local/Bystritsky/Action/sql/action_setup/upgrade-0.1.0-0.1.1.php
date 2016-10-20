@@ -2,7 +2,8 @@
 
 $installer = $this;
 $installer->startSetup();
+$table = $installer->getTable('bystritsky_action/action');
 $installer->run("
-ALTER TABLE `{$installer->getTable('bystritsky_action/action')}` ADD `status` INT NULL AFTER `is_active`;
+ALTER TABLE `$table` ADD `status` INT NULL AFTER `is_active`;
 ");
 $installer->endSetup();

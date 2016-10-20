@@ -1,83 +1,59 @@
 <?php
 
-class Bystritsky_Action_Block_Adminhtml_Actions_Edit_Tabs_Products extends Mage_Adminhtml_Block_Widget_Form
+class Bystritsky_Action_Block_Adminhtml_Actions_Edit_Tabs_Products extends Mage_Adminhtml_Block_Widget_Grid
 {
+    public function __construct()
+    {
+        parent::__construct();
+        $this->setId('categoryProductsGrid');
+        $this->setUseAjax(true);
+    }
 
-    protected function _prepareForm()
+    protected function _prepareCollection()
+    {
+        $collection = Mage::registry('current_action')->getProductsCollection();
+        $this->setCollection($collection);
+        return parent::_prepareCollection();
+    }
+
+    protected function _prepareColumns()
     {
 
         $helper = Mage::helper('bystritsky_action');
-        $model = Mage::registry('current_action');
-        $format = Mage::app()->getLocale()->getDateTimeFormat(Mage_Core_Model_Locale::FORMAT_TYPE_SHORT);
 
-        $form = new Varien_Data_Form();
-        $fieldset = $form->addFieldset('products_section', ['legend' => $helper->__('Related Products')]);
-
-        $fieldset->addField('name', 'text', [
-            'label' => $helper->__('Name'),
-            'required' => true,
-            'name' => 'name',
+        $this->addColumn('ajax_grid_id', [
+            'header' => $helper->__('Product ID'),
+            'index' => 'product_id',
+            'width' => '20',
+            'type' => 'range'
+        ]);
+        $this->addColumn('ajax_grid_name', [
+            'header' => $helper->__('Name'),
+            'index' => 'product_id'
+        ]);
+        $this->addColumn('ajax_grid_type', [
+            'header' => $helper->__('Type'),
+            'index' => 'product_id'
+        ]);
+        $this->addColumn('ajax_grid_status', [
+            'header' => $helper->__('Status'),
+            'index' => 'product_id'
+        ]);
+        $this->addColumn('ajax_grid_visibility', [
+            'header' => $helper->__('Visibility'),
+            'index' => 'product_id'
+        ]);
+        $this->addColumn('ajax_grid_sku', [
+            'header' => $helper->__('SKU'),
+            'index' => 'sku'
         ]);
 
-        $fieldset->addField('is_active', 'select', [
-            'label' => $helper->__('Active'),
-            'required' => true,
-            'name' => 'is_active',
-            'values' => ['no', 'yes']
-        ]);
-
-        $fieldset->addField('short_description', 'text', [
-            'label' => $helper->__('Short Description'),
-            'required' => true,
-            'name' => 'short_description',
-        ]);
-
-        $fieldset->addField('description', 'textarea', [
-            'label' => $helper->__('Description'),
-            'required' => true,
-            'name' => 'description'
-        ]);
-
-        $fieldset->addField('image', 'image', [
-            'label' => $helper->__('Image'),
-            'required' => false,
-            'name' => 'image'
-        ]);
-
-        $fieldset->addField('create_datetime', 'date', [
-            'time' => true,
-            'format' => $format,
-            'input_format' =>  $format,
-            'image' => $this->getSkinUrl('images/grid-cal.gif'),
-            'label' => $helper->__('Created'),
-            'required' => true,
-            'name' => 'create_datetime'
-        ]);
-
-        $fieldset->addField('start_datetime', 'date', [
-            'time' => true,
-            'format' => $format,
-            'image' => $this->getSkinUrl('images/grid-cal.gif'),
-            'label' => $helper->__('Start'),
-            'required' => true,
-            'name' => 'start_datetime'
-        ]);
-
-        $fieldset->addField('end_datetime', 'date', [
-            'time' => true,
-            'format' => $format,
-            'image' => $this->getSkinUrl('images/grid-cal.gif'),
-            'label' => $helper->__('End'),
-            'required' => false,
-            'name' => 'end_datetime'
-        ]);
-
-
-        $form->setValues($model->getData());
-        $this->setForm($form);
-        $formData = array_merge($model->getData(), ['image' => $model->getImageUrl()]);
-        $form->setValues($formData);
-
-        return parent::_prepareForm();
+        return parent::_prepareColumns();
     }
+
+    public function getGridUrl()
+    {
+        return $this->getUrl('*/*/products', ['_current' => true]);
+    }
+
 }

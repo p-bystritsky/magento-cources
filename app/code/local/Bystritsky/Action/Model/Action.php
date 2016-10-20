@@ -93,4 +93,11 @@ class Bystritsky_Action_Model_Action extends Mage_Core_Model_Abstract
             $action->save();
         }
     }
+
+    public function getProductsCollection()
+    {
+        $products = Mage::getModel('bystritsky_action/dependency')->getCollection();
+        $products->addFieldToFilter('action_id', $this->getId());
+        return $products;
+    }
 }

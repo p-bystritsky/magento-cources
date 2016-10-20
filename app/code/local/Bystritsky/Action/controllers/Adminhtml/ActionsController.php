@@ -111,4 +111,17 @@ class Bystritsky_Action_Adminhtml_ActionsController extends Mage_Adminhtml_Contr
         }
         $this->_redirect('*/*');
     }
+
+    public function productsAction()
+    {
+        $id = (int) $this->getRequest()->getParam('id');
+        $model = Mage::getModel('bystritsky_action/action')->load($id);
+        Mage::register('current_action', $model);
+
+        if (Mage::app()->getRequest()->isAjax()) {
+            $this->loadLayout();
+            echo $this->getLayout()->createBlock('bystritsky_actions/adminhtml_category_edit_tabs_products')->toHtml();
+        }
+    }
+
 }
