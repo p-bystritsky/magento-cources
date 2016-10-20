@@ -26,7 +26,7 @@ class Bystritsky_Action_Block_Adminhtml_Actions_Edit_Tabs_Products extends Mage_
             'index' => 'product_id',
             'width' => '20',
             'type' => 'range'
-        ]);
+        ]);/*
         $this->addColumn('ajax_grid_name', [
             'header' => $helper->__('Name'),
             'index' => 'name'
@@ -47,7 +47,7 @@ class Bystritsky_Action_Block_Adminhtml_Actions_Edit_Tabs_Products extends Mage_
             'header' => $helper->__('SKU'),
             'index' => 'sku'
         ]);
-
+*/
         return parent::_prepareColumns();
     }
 

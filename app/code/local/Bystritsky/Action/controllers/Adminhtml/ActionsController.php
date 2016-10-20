@@ -120,7 +120,7 @@ class Bystritsky_Action_Adminhtml_ActionsController extends Mage_Adminhtml_Contr
 
         if (Mage::app()->getRequest()->isAjax()) {
             $this->loadLayout();
-            echo $this->getLayout()->createBlock('bystritsky_actions/adminhtml_category_edit_tabs_products')->toHtml();
+            echo $this->getLayout()->createBlock('bystritsky_action/adminhtml_actions_edit_tabs_products')->toHtml();
         }
     }
 
