@@ -2,7 +2,6 @@
 
 class Bystritsky_Action_Block_Adminhtml_Actions_Edit extends Mage_Adminhtml_Block_Widget_Form_Container
 {
-
     protected function _construct()
     {
         $this->_blockGroup = 'bystritsky_action';

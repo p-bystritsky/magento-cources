@@ -8,10 +8,12 @@ class Bystritsky_Action_Block_Adminhtml_Actions_Edit_Tabs extends Mage_Adminhtml
         $helper = Mage::helper('bystritsky_action');
 
         parent::__construct();
-        $this->setId('actions_tabs'); // ???
+        //$this->setId('actions_tabs'); // ???
         $this->setDestElementId('edit_form');
         $this->setTitle($helper->__('Actions Information'));
+        //$this->setTemplate('widget/tabshoriz.phtml');
     }
+
 
     protected function _prepareLayout()
     {

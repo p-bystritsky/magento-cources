@@ -1,83 +1,77 @@
 <?php
 
-class Bystritsky_Action_Block_Adminhtml_Actions_Edit_Tabs_Products extends Mage_Adminhtml_Block_Widget_Form
+class Bystritsky_Action_Block_Adminhtml_Actions_Edit_Tabs_Products extends Mage_Adminhtml_Block_Widget_Grid
 {
 
-    protected function _prepareForm()
+    public function __construct()
+    {
+        parent::__construct();
+        // Used for AJAX loading
+        $this->setSaveParametersInSession(true);
+        $this->setUseAjax(true);
+    }
+
+    protected function _prepareCollection()
+    {
+        $collection = Mage::getModel('catalog/product')->getCollection()
+            ->addAttributeToSelect('name')
+            ->addAttributeToSelect('visibility')
+            ->addAttributeToSelect('type')
+            ->addAttributeToSelect('sku')
+            ->addStoreFilter($this->getRequest()->getParam('store'))
+            ->joinField('position',
+                'catalog/category_product',
+                'position',
+                'product_id=entity_id',
+                'category_id='.(int) $this->getRequest()->getParam('id', 0),
+                'left')->joinAttribute('visibility', 'catalog_product/visibility', 'entity_id', null, 'inner', 1);
+        $this->setCollection($collection);
+
+      return parent::_prepareCollection();
+    }
+
+    protected function _prepareColumns()
     {
 
-        $helper = Mage::helper('bystritsky_action');
-        $model = Mage::registry('current_action');
-        $format = Mage::app()->getLocale()->getDateTimeFormat(Mage_Core_Model_Locale::FORMAT_TYPE_SHORT);
-
-        $form = new Varien_Data_Form();
-        $fieldset = $form->addFieldset('products_section', ['legend' => $helper->__('Related Products')]);
-
-        $fieldset->addField('name', 'text', [
-            'label' => $helper->__('Name'),
-            'required' => true,
-            'name' => 'name',
+        $this->addColumn('entity_id', [
+            'header'    => Mage::helper('catalog')->__('ID'),
+            'sortable'  => true,
+            'width'     => '60',
+            'index'     => 'entity_id'
         ]);
-
-        $fieldset->addField('is_active', 'select', [
-            'label' => $helper->__('Active'),
-            'required' => true,
-            'name' => 'is_active',
-            'values' => ['no', 'yes']
+        $this->addColumn('name', [
+            'header'    => Mage::helper('catalog')->__('Name'),
+            'index'     => 'name'
         ]);
-
-        $fieldset->addField('short_description', 'text', [
-            'label' => $helper->__('Short Description'),
-            'required' => true,
-            'name' => 'short_description',
+        $this->addColumn('type', [
+            'header'    => Mage::helper('catalog')->__('Type'),
+            'index'     => 'type'
         ]);
-
-        $fieldset->addField('description', 'textarea', [
-            'label' => $helper->__('Description'),
-            'required' => true,
-            'name' => 'description'
+        $this->addColumn('visibility', [
+            'header'    => Mage::helper('catalog')->__('Visibility'),
+            'index'     => 'visibility'
         ]);
-
-        $fieldset->addField('image', 'image', [
-            'label' => $helper->__('Image'),
-            'required' => false,
-            'name' => 'image'
+        $this->addColumn('sku', [
+            'header'    => Mage::helper('catalog')->__('SKU'),
+            'width'     => '80',
+            'index'     => 'sku'
         ]);
-
-        $fieldset->addField('create_datetime', 'date', [
-            'time' => true,
-            'format' => $format,
-            'input_format' =>  $format,
-            'image' => $this->getSkinUrl('images/grid-cal.gif'),
-            'label' => $helper->__('Created'),
-            'required' => true,
-            'name' => 'create_datetime'
-        ]);
-
-        $fieldset->addField('start_datetime', 'date', [
-            'time' => true,
-            'format' => $format,
-            'image' => $this->getSkinUrl('images/grid-cal.gif'),
-            'label' => $helper->__('Start'),
-            'required' => true,
-            'name' => 'start_datetime'
-        ]);
-
-        $fieldset->addField('end_datetime', 'date', [
-            'time' => true,
-            'format' => $format,
-            'image' => $this->getSkinUrl('images/grid-cal.gif'),
-            'label' => $helper->__('End'),
-            'required' => false,
-            'name' => 'end_datetime'
-        ]);
-
-
-        $form->setValues($model->getData());
-        $this->setForm($form);
-        $formData = array_merge($model->getData(), ['image' => $model->getImageUrl()]);
-        $form->setValues($formData);
-
-        return parent::_prepareForm();
+        return parent::_prepareColumns();
     }
+
+    public function getGridUrl()
+    {
+        return $this->getUrl('*/*/grid', ['_current'=>true]);
+    }
+
+    protected function _getSelectedProducts()
+    {
+        $products = $this->getRequest()->getPost('selected_products');
+        if (is_null($products)) {
+            $products = $this->getCategory()->getProductsPosition();
+            return array_keys($products);
+        }
+        return $products;
+    }
+
 }

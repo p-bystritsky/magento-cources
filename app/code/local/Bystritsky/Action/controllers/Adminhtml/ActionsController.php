@@ -38,6 +38,17 @@ class Bystritsky_Action_Adminhtml_ActionsController extends Mage_Adminhtml_Contr
         $this->renderLayout();
     }
 
+    // Used for AJAX loading
+    public function gridAction()
+    {
+        $this->loadLayout();
+        $this->getResponse()->setBody(
+            $this->getLayout()->createBlock('bystritsky_action/adminhtml_actions_edit_tabs_products')
+                ->toHtml()
+        );
+    }
+
+
     public function saveAction()
     {
         $id = $this->getRequest()->getParam('id');
