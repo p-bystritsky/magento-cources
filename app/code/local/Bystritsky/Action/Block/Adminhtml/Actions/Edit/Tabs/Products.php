@@ -29,19 +29,19 @@ class Bystritsky_Action_Block_Adminhtml_Actions_Edit_Tabs_Products extends Mage_
         ]);
         $this->addColumn('ajax_grid_name', [
             'header' => $helper->__('Name'),
-            'index' => 'product_id'
+            'index' => 'name'
         ]);
         $this->addColumn('ajax_grid_type', [
             'header' => $helper->__('Type'),
-            'index' => 'product_id'
+            'index' => 'type'
         ]);
         $this->addColumn('ajax_grid_status', [
             'header' => $helper->__('Status'),
-            'index' => 'product_id'
+            'index' => 'status'
         ]);
         $this->addColumn('ajax_grid_visibility', [
             'header' => $helper->__('Visibility'),
-            'index' => 'product_id'
+            'index' => 'visibility'
         ]);
         $this->addColumn('ajax_grid_sku', [
             'header' => $helper->__('SKU'),
