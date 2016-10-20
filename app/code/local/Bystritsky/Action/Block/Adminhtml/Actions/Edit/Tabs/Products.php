@@ -6,6 +6,7 @@ class Bystritsky_Action_Block_Adminhtml_Actions_Edit_Tabs_Products extends Mage_
     public function __construct()
     {
         parent::__construct();
+        $model = Mage::registry('current_action');
         // Used for AJAX loading
         $this->setSaveParametersInSession(true);
         $this->setUseAjax(true);
@@ -16,7 +17,7 @@ class Bystritsky_Action_Block_Adminhtml_Actions_Edit_Tabs_Products extends Mage_
         $collection = Mage::getModel('catalog/product')->getCollection()
             ->addAttributeToSelect('name')
             ->addAttributeToSelect('visibility')
-            ->addAttributeToSelect('type')
+            ->addAttributeToSelect('type_id')
             ->addAttributeToSelect('sku')
             ->addStoreFilter($this->getRequest()->getParam('store'))
             ->joinField('position',
@@ -33,19 +34,26 @@ class Bystritsky_Action_Block_Adminhtml_Actions_Edit_Tabs_Products extends Mage_
     protected function _prepareColumns()
     {
 
+        $this->addColumn('in_action', [
+            'type'      => 'checkbox',
+            'header'    => Mage::helper('catalog')->__('In Action'),
+            'values'    => $this->_getSelectedProducts(),
+            'index'     => 'entity_id'
+        ]);
+
         $this->addColumn('entity_id', [
             'header'    => Mage::helper('catalog')->__('ID'),
             'sortable'  => true,
             'width'     => '60',
             'index'     => 'entity_id'
         ]);
-        $this->addColumn('name', [
+        $this->addColumn('product_name', [
             'header'    => Mage::helper('catalog')->__('Name'),
             'index'     => 'name'
         ]);
-        $this->addColumn('type', [
+        $this->addColumn('type_id', [
             'header'    => Mage::helper('catalog')->__('Type'),
-            'index'     => 'type'
+            'index'     => 'type_id'
         ]);
         $this->addColumn('visibility', [
             'header'    => Mage::helper('catalog')->__('Visibility'),
@@ -66,11 +74,10 @@ class Bystritsky_Action_Block_Adminhtml_Actions_Edit_Tabs_Products extends Mage_
 
     protected function _getSelectedProducts()
     {
-        $products = $this->getRequest()->getPost('selected_products');
-        if (is_null($products)) {
-            $products = $this->getCategory()->getProductsPosition();
-            return array_keys($products);
-        }
+        $action = Mage::registry('current_action');
+        $products = Mage::getModel('bystritsky_action/action')
+            ->getCollection()
+            ->addFieldToFilter('action_id', $action->getID());
         return $products;
     }
 

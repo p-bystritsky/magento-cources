@@ -15,5 +15,10 @@ ALTER TABLE `{$installer->getTable('bystritsky_action/dependency')}`
   ADD CONSTRAINT `bystritsky_action_dependencies_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `catalog_product_entity` (`entity_id`),
   ADD CONSTRAINT `bystritsky_action_dependencies_ibfk_1` FOREIGN KEY (`action_id`) REFERENCES `bystritsky_action_actions` (`id`);
 
+INSERT INTO `{$installer->getTable('bystritsky_action/dependency')}` (`action_id`, `product_id`) VALUES
+(1, 232),
+(1, 233),
+(1, 502)
+;
 ");
 $installer->endSetup();
