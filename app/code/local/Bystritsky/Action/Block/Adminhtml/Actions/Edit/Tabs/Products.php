@@ -2,10 +2,29 @@
 
 class Bystritsky_Action_Block_Adminhtml_Actions_Edit_Tabs_Products extends Mage_Adminhtml_Block_Widget_Grid
 {
+    private $_allProductId;
+
+    /**
+     * @return mixed
+     */
+    public function getAllProductId()
+    {
+        return $this->_allProductId;
+    }
+
+    /**
+     * @param mixed $allProductId
+     */
+    public function setAllProductId($allProductId)
+    {
+        $this->_allProductId = $allProductId;
+    }
+
     public function __construct()
     {
         parent::__construct();
-        $this->setDefaultFilter(['ajax_grid_in_category' => 1]);
+        $this->setAllProductId(Mage::registry('current_action')->getProductsCollection()->getColumnValues('product_id'));
+        //$this->setDefaultFilter(['ajax_in_action' => 1]);
         $this->setSaveParametersInSession(false);
         $this->setId('categoryProductsGrid');
         $this->setUseAjax(true);
@@ -32,7 +51,7 @@ class Bystritsky_Action_Block_Adminhtml_Actions_Edit_Tabs_Products extends Mage_
             'header_css_class' => 'a-center',
             'type' => 'checkbox',
             'name' => 'in_category',
-            'values' => Mage::registry('current_action')->getProductsCollection()->getColumnValues('product_id'),
+            'values' => $this->getAllProductId(),
             'align' => 'center',
             'index' => 'entity_id'
         ]);

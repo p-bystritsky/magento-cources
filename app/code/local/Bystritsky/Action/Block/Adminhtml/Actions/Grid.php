@@ -36,16 +36,17 @@ class Bystritsky_Action_Block_Adminhtml_Actions_Grid extends Mage_Adminhtml_Bloc
         $this->addColumn('is_active', [
             'header' => $helper->__('Active'),
             'index' => 'is_active',
-            'type'      => 'options',
-            'options'   => ['no', 'yes'],
+            'type' => 'options',
+            'options' => ['no', 'yes'],
             'width' => '25'
         ]);
 
         $this->addColumn('status', [
             'header' => $helper->__('Status'),
             'index' => 'status',
-            'type'      => 'int',
-            'width' => '25'
+            'type' => 'options',
+            'options' => Mage::getSingleton('bystritsky_action/action')->getOptionArray(),
+            'width' => '75px'
         ]);
 
         $this->addColumn('image', [
