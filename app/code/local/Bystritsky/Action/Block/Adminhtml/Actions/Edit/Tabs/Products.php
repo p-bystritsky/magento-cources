@@ -19,14 +19,7 @@ class Bystritsky_Action_Block_Adminhtml_Actions_Edit_Tabs_Products extends Mage_
             ->addAttributeToSelect('type')
             ->addAttributeToSelect('status')
             ->addAttributeToSelect('visibility')
-            ->addAttributeToSelect('sku')
-            ->addStoreFilter($this->getRequest()->getParam('store'))
-            ->joinField('position',
-                'catalog/category_product',
-                'position',
-                'product_id=entity_id',
-                'category_id=' . (int)$this->getRequest()->getParam('id', 0),
-                'left');
+            ->addAttributeToSelect('sku');
         $this->setCollection($collection);
         return parent::_prepareCollection();
     }
@@ -48,7 +41,8 @@ class Bystritsky_Action_Block_Adminhtml_Actions_Edit_Tabs_Products extends Mage_
             'header' => Mage::helper('catalog')->__('ID'),
             'sortable' => true,
             'width' => '60',
-            'index' => 'entity_id'
+            'index' => 'entity_id',
+            'type' => 'number'
         ]);
         $this->addColumn('ajax_name', [
             'header' => Mage::helper('catalog')->__('Name'),
