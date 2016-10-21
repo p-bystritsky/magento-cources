@@ -2,19 +2,14 @@
 
 class Bystritsky_Action_Block_Adminhtml_Actions_Edit_Tabs_Products extends Mage_Adminhtml_Block_Widget_Grid
 {
+
     private $_allProductId;
 
-    /**
-     * @return mixed
-     */
     public function getAllProductId()
     {
         return $this->_allProductId;
     }
 
-    /**
-     * @param mixed $allProductId
-     */
     public function setAllProductId($allProductId)
     {
         $this->_allProductId = $allProductId;
@@ -26,6 +21,8 @@ class Bystritsky_Action_Block_Adminhtml_Actions_Edit_Tabs_Products extends Mage_
         $this->setAllProductId(Mage::registry('current_action')->getProductsCollection()->getColumnValues('product_id'));
         if (!empty($this->getAllProductId())) {
             $this->setDefaultFilter(['ajax_in_action' => 1]);
+        } else {
+            $this->setDefaultFilter(['ajax_in_action' => 0]);
         }
         $this->setSaveParametersInSession(false);
         $this->setId('categoryProductsGrid');
@@ -51,12 +48,12 @@ class Bystritsky_Action_Block_Adminhtml_Actions_Edit_Tabs_Products extends Mage_
         $helper = Mage::helper('bystritsky_action');
 
         $this->addColumn('ajax_in_action', [
-            'header_css_class' => 'a-center',
-            'type' => 'checkbox',
-            'name' => 'in_action',
-            'values' => $this->getAllProductId(),
             'align' => 'center',
-            'index' => 'entity_id'
+            'header_css_class' => 'a-center',
+            'index' => 'entity_id',
+            'type' => 'checkbox',
+            // getSelectedProducts() here will cause problems!
+            'values' => $this->getAllProductId()
         ]);
 
         $this->addColumn('ajax_entity_id', [

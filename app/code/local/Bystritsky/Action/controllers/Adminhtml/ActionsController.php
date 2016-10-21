@@ -80,34 +80,42 @@ class Bystritsky_Action_Adminhtml_ActionsController extends Mage_Adminhtml_Contr
 
     public function saveAction()
     {
-
-        $x = Mage::app()->getRequest()->getParams();
         $id = $this->getRequest()->getParam('id');
         if ($data = $this->getRequest()->getPost()) {
-            try {
-                $helper = Mage::helper('bystritsky_action');
-                $model = Mage::getModel('bystritsky_action/action');
-                $model->load($id);
-                $model->addData($data)->setId($id);
-                if (isset($_FILES['image']['name']) && $_FILES['image']['name'] != '') {
-                    $uploader = new Varien_File_Uploader('image');
-                    $uploader->setAllowedExtensions(['jpg', 'jpeg', 'png', 'bmp', 'gif']);
-                    $uploader->setAllowRenameFiles(true);
-                    $uploader->setFilesDispersion(false);
-                    $uploader->save($helper->getImagePath(), $_FILES['image']['name']); // Upload the image
-                    $model->addData(['image' => $uploader->getUploadedFileName()]);
-                } elseif (isset($data['image']['delete']) && $data['image']['delete'] == 1) {
-                    $data['image'] = null;
-                    $model->addData(['image' => null]);
-                } elseif (isset($data['image']['value'])) {
-                    $model->addData(['image' => $helper->getFileName($data['image']['value'])]);
-                }
-                $model->save();
+            $helper = Mage::helper('bystritsky_action');
+            $model = Mage::getModel('bystritsky_action/action');
+            $model->load($id);
+            $model->addData($data)->setId($id);
+            $selectedProducts = explode('&', $this->getRequest()->getParam('selected_products', ''));
+            if ($selectedProducts = $this->getRequest()->getParam('selected_products', null)) {
+                $selectedProducts = Mage::helper('adminhtml/js')->decodeGridSerializedInput($selectedProducts);
+            } else {
+                $selectedProducts = array();
+            }
+            $this->updateDependencies($id, $selectedProducts);
+        }
+        try {
+            if (isset($_FILES['image']['name']) && $_FILES['image']['name'] != '') {
+                $uploader = new Varien_File_Uploader('image');
+                $uploader->setAllowedExtensions(['jpg', 'jpeg', 'png', 'bmp', 'gif']);
+                $uploader->setAllowRenameFiles(true);
+                $uploader->setFilesDispersion(false);
+                $uploader->save($helper->getImagePath(), $_FILES['image']['name']); // Upload the image
+                $model->addData(['image' => $uploader->getUploadedFileName()]);
+            } elseif (isset($data['image']['delete']) && $data['image']['delete'] == 1) {
+                $data['image'] = null;
+                $model->addData(['image' => null]);
+            } elseif (isset($data['image']['value'])) {
+                $model->addData(['image' => $helper->getFileName($data['image']['value'])]);
+            }
+            $model->save();
 
-                Mage::getSingleton('adminhtml/session')->addSuccess($this->__('Action was saved successfully'));
-                Mage::getSingleton('adminhtml/session')->setFormData(false);
-                $this->_redirect('*/*/');
-            } catch (Exception $e) {
+            Mage::getSingleton('adminhtml/session')->addSuccess($this->__('Action was saved successfully'));
+            Mage::getSingleton('adminhtml/session')->setFormData(false);
+            $this->_redirect('*/*/');
+        } catch (Exception $e) {
+            if (isset($data['image']['value'])) {
+                $model->addData(['image' => $helper->getFileName($data['image']['value'])]);
                 Mage::getSingleton('adminhtml/session')->addError($e->getMessage());
                 Mage::getSingleton('adminhtml/session')->setFormData($data);
                 $this->_redirect('*/*/edit', [
@@ -190,6 +198,45 @@ class Bystritsky_Action_Adminhtml_ActionsController extends Mage_Adminhtml_Contr
 
             $this->renderLayout();
         }
+    }
+
+    /**
+     * @param int $actionId
+     * @param int[] $newProducts
+     */
+    public function updateDependencies($actionId, $newProducts)
+    {
+        $model = Mage::getModel('bystritsky_action/dependency');
+
+        $actualProducts = $model
+            ->getCollection()
+            ->addFieldToFilter('action_id', $actionId)
+            ->getColumnValues('product_id');
+
+        $insert = array_diff($newProducts, $actualProducts);
+        $delete = array_diff($actualProducts, $newProducts);
+
+        if (!empty($insert)) {
+            foreach ($insert as $productId) {
+                $model->setActionId($actionId);
+                $model->setProductId($productId);
+                $model->save();
+                $model->unsetData();
+            }
+        }
+
+        if (!empty($delete)) {
+            foreach ($delete as $productId) {
+                $model->getCollection()
+                    ->addFieldToFilter('action_id', $actionId)
+                    ->addFieldToFilter('product_id', $productId)
+                    ->getFirstItem()
+                    ->delete();
+                $model->unsetData();
+            }
+        }
+
+        return $this;
     }
 
 }

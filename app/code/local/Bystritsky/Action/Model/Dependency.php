@@ -23,4 +23,5 @@ class Bystritsky_Action_Model_Dependency extends Mage_Core_Model_Abstract
         return parent::load($id, $field);
 
     }
+
 }
