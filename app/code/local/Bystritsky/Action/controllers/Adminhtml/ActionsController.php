@@ -86,7 +86,6 @@ class Bystritsky_Action_Adminhtml_ActionsController extends Mage_Adminhtml_Contr
             $model = Mage::getModel('bystritsky_action/action');
             $model->load($id);
             $model->addData($data)->setId($id);
-            $selectedProducts = explode('&', $this->getRequest()->getParam('selected_products', ''));
             if ($selectedProducts = $this->getRequest()->getParam('selected_products', null)) {
                 $selectedProducts = Mage::helper('adminhtml/js')->decodeGridSerializedInput($selectedProducts);
             } else {
@@ -113,6 +112,7 @@ class Bystritsky_Action_Adminhtml_ActionsController extends Mage_Adminhtml_Contr
             Mage::getSingleton('adminhtml/session')->addSuccess($this->__('Action was saved successfully'));
             Mage::getSingleton('adminhtml/session')->setFormData(false);
             $this->_redirect('*/*/');
+            return;
         } catch (Exception $e) {
             if (isset($data['image']['value'])) {
                 $model->addData(['image' => $helper->getFileName($data['image']['value'])]);
