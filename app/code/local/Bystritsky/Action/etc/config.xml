@@ -52,12 +52,12 @@
             </bystritsky_action_resource>
         </models>
         <resources>
-            <action_setup>
+            <bystritsky_action_setup>
                 <setup>
                     <module>Bystritsky_Action</module>
                     <class>Bystritsky_Action_Model_Resource_Setup</class>
                 </setup>
-            </action_setup>
+            </bystritsky_action_setup>
         </resources>
         <blocks>
             <bystritsky_action>
