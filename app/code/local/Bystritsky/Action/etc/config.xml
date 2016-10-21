@@ -16,6 +16,16 @@
         </routers>
     </admin>
     <frontend>
+        <events>
+            <page_block_html_topmenu_gethtml_before>
+                <observers>
+                    <bystritsky_action_observer>
+                        <model>bystritsky_action/observer</model>
+                        <method>topmenuGethtmlBefore</method>
+                    </bystritsky_action_observer>
+                </observers>
+            </page_block_html_topmenu_gethtml_before>
+        </events>
         <routers>
             <bystritsky_action>
                 <use>standard</use>
