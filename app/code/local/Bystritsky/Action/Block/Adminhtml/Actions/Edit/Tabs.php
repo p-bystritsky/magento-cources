@@ -26,12 +26,10 @@ class Bystritsky_Action_Block_Adminhtml_Actions_Edit_Tabs extends Mage_Adminhtml
                 ->toHtml(),
         ]);
         $this->addTab('products_section', [
+            'class' => 'ajax',
             'label' => $helper->__('Related Products'),
             'title' => $helper->__('Related Products'),
-            'content' => $this
-                ->getLayout()
-                ->createBlock('bystritsky_action/adminhtml_actions_edit_tabs_products')
-                ->toHtml(),
+            'url' => $this->getUrl('*/*/products', ['_current' => true]),
         ]);
         return parent::_prepareLayout();
     }

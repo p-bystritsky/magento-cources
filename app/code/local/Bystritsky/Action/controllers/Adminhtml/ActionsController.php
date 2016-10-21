@@ -24,7 +24,7 @@ class Bystritsky_Action_Adminhtml_ActionsController extends Mage_Adminhtml_Contr
 
         $model = Mage::getModel('bystritsky_action/action');
 
-        if($data = Mage::getSingleton('adminhtml/session')->getFormData()){
+        if ($data = Mage::getSingleton('adminhtml/session')->getFormData()) {
             $model->setData($data)->setId($id);
         } else {
             $model->load($id);
@@ -38,7 +38,7 @@ class Bystritsky_Action_Adminhtml_ActionsController extends Mage_Adminhtml_Contr
         $this->renderLayout();
     }
 
-    public function saveAction()
+    public function __saveAction()
     {
         $id = $this->getRequest()->getParam('id');
         if ($data = $this->getRequest()->getPost()) {
@@ -78,6 +78,47 @@ class Bystritsky_Action_Adminhtml_ActionsController extends Mage_Adminhtml_Contr
         $this->_redirect('*/*/');
     }
 
+    public function saveAction()
+    {
+
+        $x = Mage::app()->getRequest()->getParams();
+        $id = $this->getRequest()->getParam('id');
+        if ($data = $this->getRequest()->getPost()) {
+            try {
+                $helper = Mage::helper('bystritsky_action');
+                $model = Mage::getModel('bystritsky_action/action');
+                $model->load($id);
+                $model->addData($data)->setId($id);
+                if (isset($_FILES['image']['name']) && $_FILES['image']['name'] != '') {
+                    $uploader = new Varien_File_Uploader('image');
+                    $uploader->setAllowedExtensions(['jpg', 'jpeg', 'png', 'bmp', 'gif']);
+                    $uploader->setAllowRenameFiles(true);
+                    $uploader->setFilesDispersion(false);
+                    $uploader->save($helper->getImagePath(), $_FILES['image']['name']); // Upload the image
+                    $model->addData(['image' => $uploader->getUploadedFileName()]);
+                } elseif (isset($data['image']['delete']) && $data['image']['delete'] == 1) {
+                    $data['image'] = null;
+                    $model->addData(['image' => null]);
+                } elseif (isset($data['image']['value'])) {
+                    $model->addData(['image' => $helper->getFileName($data['image']['value'])]);
+                }
+                $model->save();
+
+                Mage::getSingleton('adminhtml/session')->addSuccess($this->__('Action was saved successfully'));
+                Mage::getSingleton('adminhtml/session')->setFormData(false);
+                $this->_redirect('*/*/');
+            } catch (Exception $e) {
+                Mage::getSingleton('adminhtml/session')->addError($e->getMessage());
+                Mage::getSingleton('adminhtml/session')->setFormData($data);
+                $this->_redirect('*/*/edit', [
+                    'id' => $id
+                ]);
+            }
+            return;
+        }
+        Mage::getSingleton('adminhtml/session')->addError($this->__('Unable to find item to save'));
+        $this->_redirect('*/*/');
+    }
 
     public function deleteAction()
     {
@@ -114,13 +155,40 @@ class Bystritsky_Action_Adminhtml_ActionsController extends Mage_Adminhtml_Contr
 
     public function productsAction()
     {
-        $id = (int) $this->getRequest()->getParam('id');
+        $id = (int)$this->getRequest()->getParam('id');
         $model = Mage::getModel('bystritsky_action/action')->load($id);
         Mage::register('current_action', $model);
-
+        $request = Mage::app()->getRequest();
+        /*
         if (Mage::app()->getRequest()->isAjax()) {
             $this->loadLayout();
             echo $this->getLayout()->createBlock('bystritsky_action/adminhtml_actions_edit_tabs_products')->toHtml();
+        }
+*/
+        if ($request->isAjax()) {
+
+            $this->loadLayout();
+            $layout = $this->getLayout();
+
+            $root = $layout->createBlock('core/text_list', 'root', ['output' => 'toHtml']);
+
+            $grid = $layout->createBlock('bystritsky_action/adminhtml_actions_edit_tabs_products');
+            $root->append($grid);
+
+            if (!$request->getParam('grid_only')) {
+                $serializer = $layout->createBlock('adminhtml/widget_grid_serializer');
+                /*
+                 * При вызове функции initSerializerBlock блока сериализации, происходит привязка блока к гриду.
+                 * Данная функция принимает 4 параметра: блок или имя грида в шаблоне, имя метода блока для получения
+                 * выделенных элементов, имя скрытого инпута (это имя используется в контроллере при сохранении),
+                 * и последним параметром идём название поля, которое используется в методе getSelectedNews в блоке грида
+                 * для получения изменений выделения новостей.
+                 */
+                $serializer->initSerializerBlock($grid, 'getSelectedProducts', 'selected_products', 'selected_products');
+                $root->append($serializer);
+            }
+
+            $this->renderLayout();
         }
     }
 

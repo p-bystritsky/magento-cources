@@ -24,7 +24,9 @@ class Bystritsky_Action_Block_Adminhtml_Actions_Edit_Tabs_Products extends Mage_
     {
         parent::__construct();
         $this->setAllProductId(Mage::registry('current_action')->getProductsCollection()->getColumnValues('product_id'));
-        //$this->setDefaultFilter(['ajax_in_action' => 1]);
+        if (!empty($this->getAllProductId())) {
+            $this->setDefaultFilter(['ajax_in_action' => 1]);
+        }
         $this->setSaveParametersInSession(false);
         $this->setId('categoryProductsGrid');
         $this->setUseAjax(true);
@@ -47,10 +49,11 @@ class Bystritsky_Action_Block_Adminhtml_Actions_Edit_Tabs_Products extends Mage_
     {
 
         $helper = Mage::helper('bystritsky_action');
+
         $this->addColumn('ajax_in_action', [
             'header_css_class' => 'a-center',
             'type' => 'checkbox',
-            'name' => 'in_category',
+            'name' => 'in_action',
             'values' => $this->getAllProductId(),
             'align' => 'center',
             'index' => 'entity_id'
@@ -105,9 +108,9 @@ class Bystritsky_Action_Block_Adminhtml_Actions_Edit_Tabs_Products extends Mage_
             $collection = $this->getCollection();
             $selectedProducts = $this->getSelectedProducts();
             if ($column->getFilter()->getValue()) {
-                $collection->addFieldToFilter('ajax_entity_id', ['in' => $selectedProducts]);
+                $collection->addFieldToFilter('entity_id', ['in' => $selectedProducts]);
             } elseif (!empty($selectedProducts)) {
-                $collection->addFieldToFilter('ajax_entity_id', ['nin' => $selectedProducts]);
+                $collection->addFieldToFilter('entity_id', ['nin' => $selectedProducts]);
             }
         } else {
             parent::_addColumnFilterToCollection($column);
@@ -126,11 +129,14 @@ class Bystritsky_Action_Block_Adminhtml_Actions_Edit_Tabs_Products extends Mage_
             $selectedProducts = Mage::app()->getRequest()->getParam('selected_products', null);
             if (is_null($selectedProducts) || !is_array($selectedProducts)) {
                 $category = Mage::registry('current_action');
-                $selectedProducts = $category->getProductsCollection()->getAllIds();
+                $selectedProducts = $category
+                    ->getProductsCollection()
+                    ->getColumnValues('product_id');
             }
             $this->_data['selected_products'] = $selectedProducts;
         }
         return $this->_data['selected_products'];
+
     }
 
 }
