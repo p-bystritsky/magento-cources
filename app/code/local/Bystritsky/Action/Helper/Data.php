@@ -2,14 +2,14 @@
 
 class Bystritsky_Action_Helper_Data extends Mage_Core_Helper_Abstract
 {
-    public function getImagePath()
+    public function getImagePath($filename)
     {
-        return Mage::getBaseDir('media') . DS . 'bystritsky_action';
+        return Mage::getBaseDir('media') . DS . 'bystritsky_action' . DS . $filename;
     }
 
     public function generateImageFilename($filename)
     {
-        if (!file_exists($this->getImagePath() . DS . $filename)) {
+        if (!file_exists($this->getImagePath($filename))) {
             return $filename;
         }
         $n = 0;
@@ -18,7 +18,7 @@ class Bystritsky_Action_Helper_Data extends Mage_Core_Helper_Abstract
         do {
             $n++;
             $new_filename = "{$file}_{$n}.{$ext}";
-        } while (file_exists($this->getImagePath() . DS . $new_filename));
+        } while (file_exists($this->getImagePath($new_filename)));
         return $new_filename;
 
     }
@@ -41,5 +41,27 @@ class Bystritsky_Action_Helper_Data extends Mage_Core_Helper_Abstract
     public function toLocalTime($dateTime)
     {
 
+    }
+
+    public function getResizedImageUrl($image, $nWidth, $nHeight)
+    {
+        $path = Mage::getBaseDir('media')
+            . DS . 'bystritsky_action'
+            . DS . $nWidth
+            . DS . $nHeight;
+        $file = $path . DS . $image;
+        if (!file_exists($file)) {
+            if (!is_dir($path)) {
+                mkdir($path, 0777, true);
+            }
+            $original = $this->getImagePath($image);
+            list($oWidth, $oHeight) = getimagesize($original);
+            $original = imagecreatefromjpeg($original);
+            $resized = imagecreatetruecolor($nWidth, $nHeight);
+
+            imagecopyresampled($resized, $original, 0, 0, 0, 0, $nWidth, $nHeight, $oWidth, $oHeight);
+            imagejpeg($resized, $file);
+        }
+        return $this->getImageUrl("$nWidth/$nHeight/$image");
     }
 }

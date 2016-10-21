@@ -12,9 +12,9 @@ $helper = Mage::helper('bystritsky_action');
             <div class="action-title">
                 <a href="<?= Mage::getUrl('*/*/view/id/' . $action['id']); ?>"><h2><?= $action['name'] ?></h2></a>
             </div>
-            <?php if ($url = $helper->getImageUrl($action['image'])):?>
+            <?php if ($helper->getImageUrl($action['image'])): ?>
                 <div class="action-image">
-                    <img class="action-image-200px" src="<?= $url ?>">
+                    <img src="<?= $helper->getResizedImageUrl($action['image'], 200, 200); ?>">
                 </div>
             <?php endif; ?>
             <div class="action-body">

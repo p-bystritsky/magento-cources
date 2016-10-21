@@ -13,9 +13,10 @@ $helper = Mage::helper('bystritsky_action');
             </div>
             <div class="action-description">
                 <?php if ($url = $helper->getImageUrl($action['image'])): ?>
-                <div class="action-image">
-                    <img class="action-image-300px" src="<?= $url ?>">
-                </div>
+                    <div class="action-image">
+                        <img class="action-image-view"
+                             src="<?= $helper->getResizedImageUrl($action['image'], 300, 300); ?>">
+                    </div>
                 <?php endif; ?>
                 <?= $action['description'] ?>
             </div>
