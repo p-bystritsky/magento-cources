@@ -8,6 +8,15 @@ class Bystritsky_Action_Model_Action extends Mage_Core_Model_Abstract
 
     private $timeFields = ['create_datetime', 'start_datetime', 'end_datetime'];
 
+    static function getOptionArray()
+    {
+        $options = [
+            'Awaited',
+            'Acting',
+            'Complited'];
+        return $options;
+    }
+
     protected function _construct()
     {
         $this->_init('bystritsky_action/action');
@@ -84,7 +93,8 @@ class Bystritsky_Action_Model_Action extends Mage_Core_Model_Abstract
         return parent::save();
     }
 
-    public function updateStatus() {
+    public function updateStatus()
+    {
         /**
          * @var $collection Bystritsky_Action_Model_Action[]
          */
@@ -92,5 +102,12 @@ class Bystritsky_Action_Model_Action extends Mage_Core_Model_Abstract
         foreach ($collection as $action) {
             $action->save();
         }
+    }
+
+    public function getProductsCollection()
+    {
+        $products = Mage::getModel('bystritsky_action/dependency')->getCollection();
+        $products->addFieldToFilter('action_id', $this->getId());
+        return $products;
     }
 }

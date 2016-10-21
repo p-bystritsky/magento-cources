@@ -26,6 +26,19 @@ class Bystritsky_Action_Block_Adminhtml_Actions_Edit_Tabs_General extends Mage_A
             'name' => 'is_active',
             'values' => ['no', 'yes']
         ]);
+/*
+        $fieldset->addField('status', 'label', [
+            'label' => $helper->__('Status'),
+            'name' => 'status'
+        ]);
+*/
+        $fieldset->addField('status', 'select', [
+            'label' => $helper->__('Status'),
+            'required' => false,
+            'name' => 'status',
+            'disabled' => 'disabled',
+            'values' => Mage::getSingleton('bystritsky_action/action')->getOptionArray()
+        ]);
 
         $fieldset->addField('short_description', 'text', [
             'label' => $helper->__('Short Description'),

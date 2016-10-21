@@ -2,8 +2,10 @@
 
 $installer = $this;
 $installer->startSetup();
+$table = $installer->getTable('bystritsky_action/action');
+$installer->getConnection()->dropTable($table);
 $installer->run("
-    CREATE TABLE `{$installer->getTable('bystritsky_action/action')}` (
+    CREATE TABLE `$table` (
       `id` int(11) NOT NULL auto_increment,
       `name` text NOT NULL,
       `is_active` int NOT NULL,
@@ -16,7 +18,7 @@ $installer->run("
       PRIMARY KEY  (`id`)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
     
-    INSERT INTO `{$installer->getTable('bystritsky_action/action')}` (`id`, `name`, `is_active`, `description`, `short_description`, `image`, `create_datetime`, `start_datetime`, `end_datetime`) VALUES
+    INSERT INTO `$table` (`id`, `name`, `is_active`, `description`, `short_description`, `image`, `create_datetime`, `start_datetime`, `end_datetime`) VALUES
 (1, 'Длинная акция', 1, 'Это очень длинная акция. Она началась давно и продлится ещё долго.', 'Это очень длинная акция.', NULL, '2016-10-11 09:43:05', '2016-09-05 21:00:00', '2017-07-13 21:00:00'),
 (2, 'Прошедшая акция', 1, 'Эта акция уже прошла. Да.', 'Эта акция уже прошла.', NULL, '2016-10-11 09:42:00', '2016-10-01 21:00:00', '2016-10-03 21:00:00'),
 (3, 'Бесконечная акция', 1, 'Есть у акции начало, нет у акции конца.', 'Есть начало, нет конца.', NULL, '2016-10-01 21:00:00', '2016-10-01 21:00:00', NULL),
