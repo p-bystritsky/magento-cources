@@ -9,10 +9,9 @@ class Bystritsky_Action_Block_Adminhtml_Actions_Grid_Renderer_Image extends Mage
     {
         $val = $row->getData($this->getColumn()->getIndex());
         if ($val) {
-            $val = str_replace("no_selection", "", $val);
+            $file = str_replace("no_selection", "", $val);
             $helper = Mage::helper('bystritsky_action');
-            $url = $helper->getImageUrl($val);
-            $out = "<img src=". $url ." width='60px'/>";
+            $out = "<img src=". $helper->getResizedImageUrl($file, 50, 50) ." />";
             return $out;
         } else {
             return null;
