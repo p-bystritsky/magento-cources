@@ -14,9 +14,5 @@ CREATE TABLE `$dependencyTable`  (
   UNIQUE KEY `dependency` (`product_id`,`action_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-ALTER TABLE `$dependencyTable`
-  ADD CONSTRAINT `bystritsky_action_dependencies_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `catalog_product_entity` (`entity_id`),
-  ADD CONSTRAINT `bystritsky_action_dependencies_ibfk_1` FOREIGN KEY (`action_id`) REFERENCES `$actionTable` (`id`);
-
 ");
 $installer->endSetup();
