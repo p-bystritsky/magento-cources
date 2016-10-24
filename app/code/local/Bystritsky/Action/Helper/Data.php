@@ -2,9 +2,13 @@
 
 class Bystritsky_Action_Helper_Data extends Mage_Core_Helper_Abstract
 {
+    public function getImagesPath()
+    {
+        return Mage::getBaseDir('media') . DS . 'bystritsky_action';
+    }
     public function getImagePath($filename)
     {
-        return Mage::getBaseDir('media') . DS . 'bystritsky_action' . DS . $filename;
+        return $this->getImagesPath() . DS . $filename;
     }
 
     public function generateImageFilename($filename)
