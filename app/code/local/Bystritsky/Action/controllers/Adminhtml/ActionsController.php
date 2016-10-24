@@ -100,7 +100,10 @@ class Bystritsky_Action_Adminhtml_ActionsController extends Mage_Adminhtml_Contr
                 $uploader->setAllowRenameFiles(true);
                 $uploader->setFilesDispersion(false);
                 $uploader->save($helper->getImagesPath(), $_FILES['image']['name']); // Upload the image
+
                 $model->addData(['image' => $uploader->getUploadedFileName()]);
+
+
             } elseif (isset($data['image']['delete']) && $data['image']['delete'] == 1) {
                 $data['image'] = null;
                 $model->addData(['image' => null]);
@@ -115,14 +118,14 @@ class Bystritsky_Action_Adminhtml_ActionsController extends Mage_Adminhtml_Contr
             return;
         } catch (Exception $e) {
             if (isset($data['image']['value'])) {
-                $model->addData(['image' => $helper->getFileName($data['image']['value'])]);
+                //$model->addData(['image' => $helper->getFileName($data['image']['value'])]);
                 Mage::getSingleton('adminhtml/session')->addError($e->getMessage());
                 Mage::getSingleton('adminhtml/session')->setFormData($data);
                 $this->_redirect('*/*/edit', [
                     'id' => $id
                 ]);
+                return;
             }
-            return;
         }
         Mage::getSingleton('adminhtml/session')->addError($this->__('Unable to find item to save'));
         $this->_redirect('*/*/');

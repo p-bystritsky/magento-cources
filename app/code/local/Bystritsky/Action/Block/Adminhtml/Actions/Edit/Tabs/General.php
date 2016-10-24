@@ -87,7 +87,7 @@ class Bystritsky_Action_Block_Adminhtml_Actions_Edit_Tabs_General extends Mage_A
         ]);
 
 
-        $form->setValues($model->getData());
+        //$form->setValues($model->getData());
         $this->setForm($form);
         $formData = array_merge($model->getData(), ['image' => $model->getImageUrl()]);
         $form->setValues($formData);

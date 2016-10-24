@@ -67,13 +67,16 @@ class Bystritsky_Action_Model_Action extends Mage_Core_Model_Abstract
     {
         $helper = Mage::helper('bystritsky_action');
         if ($filename = $this->getImage()) {
-            return $helper->getImageUrl($filename);
+            return $helper->getImageUrl($helper->getFilename($filename));
         }
         return null;
     }
 
     public function save()
     {
+        if (is_array($tmp = $this->getImage())) {
+            $this->setImage($tmp['value']);
+        }
         return parent::save();
     }
 
@@ -125,4 +128,15 @@ class Bystritsky_Action_Model_Action extends Mage_Core_Model_Abstract
         $products->addFieldToFilter('action_id', $this->getId());
         return $products;
     }
+
+    public function setData($key, $value = null)
+    {
+        parent::setData($key, $value);
+        if (is_array($tmp = $this->getImage())) {
+            $this->setImage($tmp['value']);
+        }
+        return $this;
+    }
+
+
 }
