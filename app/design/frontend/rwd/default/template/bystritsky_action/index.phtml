@@ -1,5 +1,5 @@
 <?php
-$actions = $this->getActionsCollection();
+$collection = $this->getCollection();
 $helper = Mage::helper('bystritsky_action');
 ?>
 <div class="action-pager">
@@ -7,7 +7,7 @@ $helper = Mage::helper('bystritsky_action');
 </div>
 <h1>Current actions</h1>
 <div class="action-actions">
-    <?php foreach ($actions as $action): ?>
+    <?php foreach ($collection as $action): ?>
         <div class="action-entity">
             <div class="action-title">
                 <a href="<?= Mage::getUrl('*/*/view/id/' . $action['id']); ?>"><h2><?= $action['name'] ?></h2></a>

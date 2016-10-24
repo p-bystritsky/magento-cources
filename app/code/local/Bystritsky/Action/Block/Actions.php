@@ -1,11 +1,17 @@
 <?php
 
-class Bystritsky_Action_Block_Actions extends Mage_Catalog_Block_Product_Abstract
+class Bystritsky_Action_Block_Actions extends Mage_Core_Block_Template
 {
-
+    public function __construct()
+{
+    parent::__construct();
+    $collection = Mage::getModel('bystritsky_action/action')->getCollection();
+    $this->setCollection($collection);
+}
+/*
     public function getActionsCollection()
     {
-        /** @var Bystritsky_Action_Model_Resource_Action_Collection $actions */
+        /** @var Bystritsky_Action_Model_Resource_Action_Collection $actions *\/
 
         $page = $this->getRequest()->getParam('p', 1);
         $limit = $this->getRequest()->getParam('limit', 10);
@@ -20,22 +26,24 @@ class Bystritsky_Action_Block_Actions extends Mage_Catalog_Block_Product_Abstrac
         //Mage::log((string) $actions->getSelect());
         return $this->dirtyHack($actions);
     }
-
+*/
     protected function _prepareLayout()
     {
         parent::_prepareLayout();
         $pager = $this->getLayout()->createBlock('page/html_pager', 'custom.pager');
         $pager->setAvailableLimit([10 => 10, 20 => 20, 'all' => 'all']);
-        $pager->setCollection($this->getActionsCollection());
+        $pager->setCollection($this->getCollection());
         $this->setChild('pager', $pager);
+        $this->getCollection()->load();
         return $this;
     }
+
 
     public function getPagerHtml()
     {
         return $this->getChildHtml('pager');
     }
-
+/*
     private function dirtyHack($collection)
     {
         $timeFields = ['create_datetime', 'start_datetime', 'end_datetime'];
@@ -52,4 +60,5 @@ class Bystritsky_Action_Block_Actions extends Mage_Catalog_Block_Product_Abstrac
         }
         return $collection;
     }
+*/
 }
