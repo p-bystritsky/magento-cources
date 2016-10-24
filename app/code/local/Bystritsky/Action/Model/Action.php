@@ -110,11 +110,13 @@ class Bystritsky_Action_Model_Action extends Mage_Core_Model_Abstract
         /**
          * @var $collection Bystritsky_Action_Model_Action[]
          */
+        print("Cron start\n");
         $collection = Mage::getModel('bystritsky_action/action')->getCollection();
         foreach ($collection as $action) {
             $action->_afterLoad();
             $action->save();
         }
+        print("Cron finish\n");
     }
 
     public function getProductsCollection()
