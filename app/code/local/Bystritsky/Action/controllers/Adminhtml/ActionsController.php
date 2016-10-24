@@ -96,7 +96,7 @@ class Bystritsky_Action_Adminhtml_ActionsController extends Mage_Adminhtml_Contr
         try {
             if (isset($_FILES['image']['name']) && $_FILES['image']['name'] != '') {
                 $uploader = new Varien_File_Uploader('image');
-                $uploader->setAllowedExtensions(['jpg', 'jpeg', 'png', 'bmp', 'gif']);
+                $uploader->setAllowedExtensions(['jpg', 'jpeg']); //, 'png', 'bmp', 'gif']);
                 $uploader->setAllowRenameFiles(true);
                 $uploader->setFilesDispersion(false);
                 $uploader->save($helper->getImagesPath(), $_FILES['image']['name']); // Upload the image
