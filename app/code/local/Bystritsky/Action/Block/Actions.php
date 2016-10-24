@@ -34,7 +34,7 @@ class Bystritsky_Action_Block_Actions extends Mage_Core_Block_Template
         $pager->setAvailableLimit([10 => 10, 20 => 20, 'all' => 'all']);
         $pager->setCollection($this->getCollection());
         $this->setChild('pager', $pager);
-        $this->getCollection()->load();
+        $this->getCollection();
         return $this;
     }
 

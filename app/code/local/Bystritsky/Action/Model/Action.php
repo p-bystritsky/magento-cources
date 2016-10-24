@@ -37,6 +37,13 @@ class Bystritsky_Action_Model_Action extends Mage_Core_Model_Abstract
 
         parent::load($id, $field);
 
+        return $this;
+    }
+
+
+    public function _afterLoad()
+    {
+        // from GMT to local time
         foreach ($this->timeFields as $field) {
             if ($raw = $this->getData($field)) {
                 $time = Mage::getModel('core/date')->timestamp(strtotime($raw));
@@ -45,8 +52,7 @@ class Bystritsky_Action_Model_Action extends Mage_Core_Model_Abstract
                 $this->setData($field, date($dateTime));
             }
         }
-
-        return $this;
+        return parent::_afterLoad();
     }
 
 
@@ -68,6 +74,12 @@ class Bystritsky_Action_Model_Action extends Mage_Core_Model_Abstract
 
     public function save()
     {
+        return parent::save();
+    }
+
+    protected function _beforeSave()
+    {
+        // time to GMT
         foreach ($this->timeFields as $field) {
             if ($raw = $this->getData($field)) {
                 //$locale = Mage::app()->getLocale()->getLocaleCode();
@@ -90,7 +102,7 @@ class Bystritsky_Action_Model_Action extends Mage_Core_Model_Abstract
             $this->setStatus(self::ACTING);
         }
 
-        return parent::save();
+        return parent::_beforeSave();
     }
 
     public function updateStatus()
@@ -98,8 +110,9 @@ class Bystritsky_Action_Model_Action extends Mage_Core_Model_Abstract
         /**
          * @var $collection Bystritsky_Action_Model_Action[]
          */
-        $collection = Mage::getModel('bystritsky_action/action')->getCollection()->load();
+        $collection = Mage::getModel('bystritsky_action/action')->getCollection();
         foreach ($collection as $action) {
+            $action->_afterLoad();
             $action->save();
         }
     }
