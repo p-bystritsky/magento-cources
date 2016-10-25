@@ -1,8 +1,9 @@
 <?php
 $actions = $this->getRelatedActions();
 ?>
-<?php if ($actions->getSize()): ?>
-    <div class="product-related-actions">
+
+<div class="product-related-actions">
+    <?php if ($actions->getSize()): ?>
         <div class="product-actions">
             <?php foreach ($actions as $action): ?>
                 <?php
@@ -20,5 +21,6 @@ $actions = $this->getRelatedActions();
                 </div>
             <?php endforeach; ?>
         </div>
-    </div>
-<?php endif; ?>
+    <?php endif; ?>
+    Sorry, no actions on this product
+</div>
