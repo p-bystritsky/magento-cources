@@ -40,7 +40,7 @@ $helper = Mage::helper('bystritsky_action');
         <?php if ($products): ?>
             <div class="actions-related-products">
                 Related products:
-                <table class="actions-table">
+                <div class="actions-products">
                     <?php foreach ($products as $product): ?>
                         <?php
                         $name = $product->getName();
@@ -49,14 +49,16 @@ $helper = Mage::helper('bystritsky_action');
                         $image = $product->getImageUrl();
                         $price = Mage::helper('core')->currency($product->getPrice(), true, false);
                         ?>
-                        <tr>
-                            <td class="actions-table-name"><a href="<?= $link ?>"><?= $name ?></a></td>
-                            <td class="actions-table-sku"><?= $sku ?></td>
-                            <td class="actions-table-image"><a href="<?= $link ?>"><img src="<?= $image ?>"></a></td>
-                            <td class="actions-table-price"><?= $price ?></td>
-                        </tr>
+                        <div class="actions-product">
+                            <div class="actions-product-cell"><a href="<?= $link ?>"><?= $name ?></a></div>
+                            <div class="actions-product-cell"><?= $sku ?></div>
+                            <div class="actions-product-cell"><a href="<?= $link ?>">
+                                    <img class="actions-product-image" src="<?= $image ?>">
+                                </a></div>
+                            <div class="actions-product-cell"><?= $price ?></div>
+                        </div>
                     <?php endforeach; ?>
-                </table>
+                </div>
             </div>
         <?php endif; ?>
     </div>

@@ -11,6 +11,7 @@
 .action-entity {
   height: auto;
   margin: 20px;
+  width: 100%;
 }
 
 .action-title {
@@ -61,7 +62,7 @@
 }
 
 .start-end {
-
+  clear: both;
 }
 
 .action-start {
@@ -79,6 +80,34 @@
 .action-end-datetime {
 
 }
+
 .action-pager {
 
+}
+
+.actions-related-products {
+  margin: 10px;
+  width: 100%;
+}
+.actions-products {
+  width: 100%;
+  display: table;
+}
+.actions-product {
+  width: 100%;
+  display: table-row;
+}
+
+.actions-product-cell {
+  display: table-cell;
+  vertical-align: middle;
+  width: auto;
+}
+
+.actions-product-image {
+  height: auto;
+  width: auto;
+  max-width: 100px;
+  max-height: 100px;
+  padding: 10px;
 }
