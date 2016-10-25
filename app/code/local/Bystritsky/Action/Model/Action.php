@@ -122,7 +122,7 @@ class Bystritsky_Action_Model_Action extends Mage_Core_Model_Abstract
         print("Cron finish\n");
     }
 
-    public function getProductsCollection()
+    public function getProductsCollection($params = null)
     {
         $products = Mage::getModel('bystritsky_action/dependency')->getCollection();
         $products->addFieldToFilter('action_id', $this->getId());

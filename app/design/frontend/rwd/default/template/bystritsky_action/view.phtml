@@ -1,5 +1,9 @@
 <?php
 $action = $this->getAction();
+$products = $this->getProductsRelatedToAtion($action, [
+    'visibility' => Mage_Catalog_Model_Product_Visibility::VISIBILITY_BOTH,
+    'status' => Mage_Catalog_Model_Product_Status::STATUS_ENABLED
+], ['name', 'sku', 'image', 'price']);
 $helper = Mage::helper('bystritsky_action');
 ?>
 <div class="action-actions">
@@ -33,6 +37,28 @@ $helper = Mage::helper('bystritsky_action');
                 </div>
             </div>
         </div>
+        <?php if ($products): ?>
+            <div class="actions-related-products">
+                Related products:
+                <table class="actions-table">
+                    <?php foreach ($products as $product): ?>
+                        <?php
+                        $name = $product->getName();
+                        $sku = $product->getSku();
+                        $link = $product->getProductUrl();
+                        $image = $product->getImageUrl();
+                        $price = Mage::helper('core')->currency($product->getPrice(), true, false);
+                        ?>
+                        <tr>
+                            <td class="actions-table-name"><a href="<?= $link ?>"><?= $name ?></a></td>
+                            <td class="actions-table-sku"><?= $sku ?></td>
+                            <td class="actions-table-image"><a href="<?= $link ?>"><img src="<?= $image ?>"></a></td>
+                            <td class="actions-table-price"><?= $price ?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                </table>
+            </div>
+        <?php endif; ?>
     </div>
 </div>
 
