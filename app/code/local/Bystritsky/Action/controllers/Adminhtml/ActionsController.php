@@ -22,7 +22,7 @@ class Bystritsky_Action_Adminhtml_ActionsController extends Mage_Adminhtml_Contr
                 return Mage::getSingleton('admin/session')->isAllowed('bystritsky_action/view');
                 break;
             default:
-                return Mage::getSingleton('admin/session')->isAllowed('bystritsky_action/page');
+                return Mage::getSingleton('admin/session')->isAllowed('bystritsky_action/view');
                 break;
         }
 
