@@ -3,6 +3,13 @@
 class Bystritsky_Action_Block_Adminhtml_Actions_Grid extends Mage_Adminhtml_Block_Widget_Grid
 {
 
+    public function __construct()
+    {
+        parent::__construct();
+        $this->setId('actionsGrid');
+        $this->setVarNameFilter('actions_filter');
+
+    }
     protected function _prepareCollection()
     {
         $collection = Mage::getModel('bystritsky_action/action')->getCollection();
