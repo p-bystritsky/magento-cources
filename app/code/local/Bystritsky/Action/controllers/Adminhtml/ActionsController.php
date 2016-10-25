@@ -3,6 +3,31 @@
 class Bystritsky_Action_Adminhtml_ActionsController extends Mage_Adminhtml_Controller_Action
 {
 
+    protected function _isAllowed()
+    {
+        switch ($this->getRequest()->getActionName()) {
+            case 'new':
+                return Mage::getSingleton('admin/session')->isAllowed('bystritsky_action/add');
+                break;
+            case 'save':
+                return Mage::getSingleton('admin/session')->isAllowed('bystritsky_action/edit');
+                break;
+            case 'delete':
+            case 'massDelete':
+                return Mage::getSingleton('admin/session')->isAllowed('bystritsky_action/delete');
+                break;
+            case 'index':
+            case 'edit':
+            case 'products':
+                return Mage::getSingleton('admin/session')->isAllowed('bystritsky_action/view');
+                break;
+            default:
+                return Mage::getSingleton('admin/session')->isAllowed('bystritsky_action/page');
+                break;
+        }
+
+    }
+
     public function indexAction()
     {
         $this->loadLayout();
