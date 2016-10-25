@@ -89,10 +89,12 @@
   margin: 10px;
   width: 100%;
 }
+
 .actions-products {
   width: 100%;
   display: table;
 }
+
 .actions-product {
   width: 100%;
   display: table-row;
@@ -110,4 +112,25 @@
   max-width: 100px;
   max-height: 100px;
   padding: 10px;
+}
+
+.product-related-actions {
+  margin: 10px;
+  width: 100%;
+}
+
+.product-actions {
+  width: 100%;
+  display: table;
+}
+
+.product-action {
+  width: 100%;
+  display: table-row;
+}
+
+.product-action-cell {
+  display: table-cell;
+  vertical-align: middle;
+  width: auto;
 }

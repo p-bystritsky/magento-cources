@@ -1,0 +1,24 @@
+<?php
+$actions = $this->getRelatedActions();
+?>
+<?php if ($actions->getSize()): ?>
+    <div class="product-related-actions">
+        <div class="product-actions">
+            <?php foreach ($actions as $action): ?>
+                <?php
+                $link = Mage::getUrl('bystritsky_action/index/view', ['id' => $action->getId()]);
+                ?>
+                <div class="product-action">
+                    <div class="product-action-cell"><a href="<?= $link ?>"><?= $action->getName(); ?></a></div>
+                    <div class="product-action-cell"><?= $action->getShortDescription(); ?></div>
+                    <div class="product-action-cell">Start: <?= $action->getStartDatetime(); ?></div>
+                    <div class="product-action-cell">
+                        <?php if ($endDate = $action->getEndDatetime()): ?>
+                            End: <?= $endDate ?>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </div>
+    </div>
+<?php endif; ?>

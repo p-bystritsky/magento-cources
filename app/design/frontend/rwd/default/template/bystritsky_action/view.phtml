@@ -1,6 +1,6 @@
 <?php
 $action = $this->getAction();
-$products = $this->getProductsRelatedToAtion($action, [
+$products = $this->getProductsRelatedToAction($action, [
     'visibility' => Mage_Catalog_Model_Product_Visibility::VISIBILITY_BOTH,
     'status' => Mage_Catalog_Model_Product_Status::STATUS_ENABLED
 ], ['name', 'sku', 'image', 'price']);
@@ -37,7 +37,7 @@ $helper = Mage::helper('bystritsky_action');
                 </div>
             </div>
         </div>
-        <?php if ($products): ?>
+        <?php if ($products->getSize()): ?>
             <div class="actions-related-products">
                 Related products:
                 <div class="actions-products">

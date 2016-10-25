@@ -10,10 +10,11 @@ class Bystritsky_Action_Block_View extends Mage_Core_Block_Template
         if ($action->getIsActive() && $action->getStatus() == Bystritsky_Action_Model_Action::ACTING) {
             return $action;
         } else {
-            Mage::app()->getResponse()->setRedirect('/no-route.html');
+            echo Mage::app()->getResponse()->setRedirect('/no-route.html');
+            exit;
         }
     }
-    public function getProductsRelatedToAtion($action, $params = null, $fields = null) {
+    public function getProductsRelatedToAction($action, $params = null, $fields = null) {
         $productIds = $action->getProductsCollection()->getColumnValues('product_id');
         $products = Mage::getModel('catalog/product')->getCollection();
         $products->addAttributeToFilter('entity_id', ['in' => $productIds]);
