@@ -2,8 +2,12 @@
 
 $installer = $this;
 $installer->startSetup();
-$table = $installer->getTable('bystritsky_action/action');
-$installer->run("
-ALTER TABLE `$table` ADD `status` INT NULL AFTER `is_active`;
-");
+$tableName = $installer->getTable('bystritsky_action/action');
+
+$installer->getConnection()->addColumn($tableName, 'status', [
+    'type'  => Varien_Db_Ddl_Table::TYPE_INTEGER,
+    'null' => true,
+    'comment' => 'Calculates in runtime'
+]);
+
 $installer->endSetup();
