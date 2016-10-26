@@ -16,7 +16,10 @@ class Bystritsky_Action_Block_View extends Mage_Core_Block_Template
     }
     public function getProductsRelatedToAction($action, $params = null, $fields = null) {
         $productIds = $action->getProductsCollection()->getColumnValues('product_id');
-        $products = Mage::getModel('catalog/product')->getCollection();
+        $websiteId = Mage::app()->getWebsite()->getId();
+        $products = Mage::getModel('catalog/product')
+            ->getCollection()
+            ->addWebsiteFilter([$websiteId]);
         $products->addAttributeToFilter('entity_id', ['in' => $productIds]);
         if ($params) {
             foreach ($params as $key => $value) {
