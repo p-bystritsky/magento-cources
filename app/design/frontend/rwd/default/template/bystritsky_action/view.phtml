@@ -26,11 +26,11 @@ $helper = Mage::helper('bystritsky_action');
             </div>
             <div class="start-end">
                 <div class="action-start">
-                    From: <span class="action-start-datetime"><?= $action['start_datetime'] ?></span>
+                    <?= $this->__('From: '); ?><span class="action-start-datetime"><?= $action['start_datetime'] ?></span>
                 </div>
                 <div class="action-end">
                     <?php if (!empty($action['end_datetime'])): ?>
-                        To: <span class="action-end-datetime"><?= $action['end_datetime'] ?></span>
+                        <?= $this->__('To: '); ?><span class="action-end-datetime"><?= $action['end_datetime'] ?></span>
                     <?php else: ?>
                         <br>
                     <?php endif; ?>
@@ -39,7 +39,7 @@ $helper = Mage::helper('bystritsky_action');
         </div>
         <?php if ($products->getSize()): ?>
             <div class="actions-related-products">
-                Related products:
+                <?= $this->__('Related products:'); ?>
                 <div class="actions-products">
                     <?php foreach ($products as $product): ?>
                         <?php

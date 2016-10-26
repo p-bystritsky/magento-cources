@@ -12,16 +12,16 @@ $actions = $this->getRelatedActions();
                 <div class="product-action">
                     <div class="product-action-cell"><a href="<?= $link ?>"><?= $action->getName(); ?></a></div>
                     <div class="product-action-cell"><?= $action->getShortDescription(); ?></div>
-                    <div class="product-action-cell">Start: <?= $action->getStartDatetime(); ?></div>
+                    <div class="product-action-cell"><?= $this->__('Start: '); ?><?= $action->getStartDatetime(); ?></div>
                     <div class="product-action-cell">
                         <?php if ($endDate = $action->getEndDatetime()): ?>
-                            End: <?= $endDate ?>
+                            <?= $this->__('End: '); ?><?= $endDate ?>
                         <?php endif; ?>
                     </div>
                 </div>
             <?php endforeach; ?>
         </div>
     <?php else: ?>
-        <?= $this->__('Sorry, no actions on this product'); ?>
+        <?= $this->__('Sorry, no actions for this product'); ?>
     <?php endif; ?>
 </div>
