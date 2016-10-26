@@ -6,13 +6,13 @@
     </modules>
     <admin>
         <routers>
-            <bystritsky_action_admin>
-                <use>admin</use>
+            <adminhtml>
                 <args>
-                    <module>Bystritsky_Action</module>
-                    <frontName>action_admin</frontName>
+                    <modules>
+                        <Bystritsky_Action after="Mage_Adminhtml">Bystritsky_Action_Adminhtml</Bystritsky_Action>
+                    </modules>
                 </args>
-            </bystritsky_action_admin>
+            </adminhtml>
         </routers>
     </admin>
     <frontend>
