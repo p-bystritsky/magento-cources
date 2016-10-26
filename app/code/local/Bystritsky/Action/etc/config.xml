@@ -9,7 +9,7 @@
             <adminhtml>
                 <args>
                     <modules>
-                        <Bystritsky_Action after="Mage_Adminhtml">Bystritsky_Action_Adminhtml</Bystritsky_Action>
+                        <bystritsky_action after="Mage_Adminhtml">Bystritsky_Action_Adminhtml</bystritsky_action>
                     </modules>
                 </args>
             </adminhtml>
