@@ -48,13 +48,14 @@ class Bystritsky_Action_Adminhtml_ActionsController extends Mage_Adminhtml_Contr
         $id = (int)$this->getRequest()->getParam('id');
 
         $model = Mage::getModel('bystritsky_action/action');
-
+        $model->load($id);
+/*
         if ($data = Mage::getSingleton('adminhtml/session')->getFormData()) {
             $model->setData($data)->setId($id);
         } else {
             $model->load($id);
         }
-
+*/
         Mage::register('current_action', $model);
 
         $this->loadLayout()->_setActiveMenu('bystritsky_action');
