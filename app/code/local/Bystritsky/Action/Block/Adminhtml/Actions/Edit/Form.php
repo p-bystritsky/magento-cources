@@ -8,6 +8,10 @@ class Bystritsky_Action_Block_Adminhtml_Actions_Edit_Form extends Mage_Adminhtml
         $helper = Mage::helper('bystritsky_action');
         $model = Mage::registry('current_action');
 
+        if (!$model->getId()) {
+            $model->clearInstance();
+        }
+
 
         $form = new Varien_Data_Form([
             'id' => 'edit_form',

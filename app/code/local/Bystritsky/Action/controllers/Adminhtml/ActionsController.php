@@ -70,7 +70,14 @@ class Bystritsky_Action_Adminhtml_ActionsController extends Mage_Adminhtml_Contr
         if ($data = $this->getRequest()->getPost()) {
             $helper = Mage::helper('bystritsky_action');
             $model = Mage::getModel('bystritsky_action/action');
-            $model->load($id);
+            if ($id) {
+                $model->load($id);
+            } else {
+                $model->setTemp(1);  // need only to force model to set id
+                $model->save();
+                $id = $model->getId();
+            }
+
             $oldImage = $model->getImage();
             $model->addData($data)->setId($id);
             if ($selectedProducts = $this->getRequest()->getParam('selected_products', null)) {
@@ -98,7 +105,7 @@ class Bystritsky_Action_Adminhtml_ActionsController extends Mage_Adminhtml_Contr
             }
 
             $model->save();
-            $id = $model->getId();
+
             Mage::getSingleton('adminhtml/session')->addSuccess($this->__('Action was saved successfully'));
             Mage::getSingleton('adminhtml/session')->setFormData(false);
             if ($this->getRequest()->getParam('back')) {
