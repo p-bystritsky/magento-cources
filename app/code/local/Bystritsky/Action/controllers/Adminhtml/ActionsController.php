@@ -48,14 +48,14 @@ class Bystritsky_Action_Adminhtml_ActionsController extends Mage_Adminhtml_Contr
         $id = (int)$this->getRequest()->getParam('id');
 
         $model = Mage::getModel('bystritsky_action/action');
-        $model->load($id);
-/*
+       // $model->load($id);
+
         if ($data = Mage::getSingleton('adminhtml/session')->getFormData()) {
             $model->setData($data)->setId($id);
         } else {
             $model->load($id);
         }
-*/
+
         Mage::register('current_action', $model);
 
         $this->loadLayout()->_setActiveMenu('bystritsky_action');
@@ -99,12 +99,11 @@ class Bystritsky_Action_Adminhtml_ActionsController extends Mage_Adminhtml_Contr
             $model->save();
 
             Mage::getSingleton('adminhtml/session')->addSuccess($this->__('Action was saved successfully'));
+            Mage::getSingleton('adminhtml/session')->setFormData(false);
             if ($this->getRequest()->getParam('back')) {
-                Mage::getSingleton('adminhtml/session')->setFormData($model->getData());
                 $this->_redirect('*/*/edit', ['id' => $id]);
                 return;
             } else {
-                Mage::getSingleton('adminhtml/session')->setFormData(false);
                 $this->_redirect('*/*/');
                 return;
             }
