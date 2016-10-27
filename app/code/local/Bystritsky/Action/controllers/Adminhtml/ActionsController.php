@@ -99,7 +99,7 @@ class Bystritsky_Action_Adminhtml_ActionsController extends Mage_Adminhtml_Contr
 
             Mage::getSingleton('adminhtml/session')->addSuccess($this->__('Action was saved successfully'));
             if ($this->getRequest()->getParam('back')) {
-                Mage::getSingleton('adminhtml/session')->setFormData($data);
+                Mage::getSingleton('adminhtml/session')->setFormData($model->getData());
                 $this->_redirect('*/*/edit', ['id' => $id]);
                 return;
             } else {
