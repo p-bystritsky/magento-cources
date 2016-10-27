@@ -71,6 +71,7 @@ class Bystritsky_Action_Adminhtml_ActionsController extends Mage_Adminhtml_Contr
             $helper = Mage::helper('bystritsky_action');
             $model = Mage::getModel('bystritsky_action/action');
             $model->load($id);
+            $oldImage = $model->getImage();
             $model->addData($data)->setId($id);
             if ($selectedProducts = $this->getRequest()->getParam('selected_products', null)) {
                 $selectedProducts = Mage::helper('adminhtml/js')->decodeGridSerializedInput($selectedProducts);
@@ -86,16 +87,16 @@ class Bystritsky_Action_Adminhtml_ActionsController extends Mage_Adminhtml_Contr
                 $uploader->setAllowRenameFiles(true);
                 $uploader->setFilesDispersion(false);
                 $uploader->save($helper->getImagesPath(), $_FILES['image']['name']); // Upload the image
-
                 $model->addData(['image' => $uploader->getUploadedFileName()]);
-
-
+                $helper->removeImage($oldImage);
             } elseif (isset($data['image']['delete']) && $data['image']['delete'] == 1) {
                 $data['image'] = null;
                 $model->addData(['image' => null]);
+                $helper->removeImage($oldImage);
             } elseif (isset($data['image']['value'])) {
                 $model->addData(['image' => $helper->getFileName($data['image']['value'])]);
             }
+
             $model->save();
 
             Mage::getSingleton('adminhtml/session')->addSuccess($this->__('Action was saved successfully'));

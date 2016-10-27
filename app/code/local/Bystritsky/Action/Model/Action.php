@@ -56,13 +56,6 @@ class Bystritsky_Action_Model_Action extends Mage_Core_Model_Abstract
     }
 
 
-    protected function _afterDelete()
-    {
-        $helper = Mage::helper('bystritsky_action');
-        @unlink($helper->getImagePath($this->getId()));
-        return parent::_afterDelete();
-    }
-
     public function getImageUrl()
     {
         $helper = Mage::helper('bystritsky_action');
@@ -136,6 +129,14 @@ class Bystritsky_Action_Model_Action extends Mage_Core_Model_Abstract
             $this->setImage($tmp['value']);
         }
         return $this;
+    }
+
+    protected function _beforeDelete()
+    {
+        $helper = Mage::helper('bystritsky_action');
+        $this->load($this->getId());
+        $helper->removeImage($this->getImage());
+        return parent::_beforeDelete();
     }
 
 

@@ -68,4 +68,24 @@ class Bystritsky_Action_Helper_Data extends Mage_Core_Helper_Abstract
         }
         return $this->getImageUrl("$nWidth/$nHeight/$image");
     }
+
+    public function removeImage($fileName, $path = null) {
+        if(!$fileName) {
+            return;
+        }
+        if (!$path) {
+            $path = $this->getImagesPath();
+        }
+        $fullFileName = $path . DS . $fileName;
+        if (file_exists($fullFileName) && is_file($fullFileName)) {
+            unlink($fullFileName);
+        }
+        foreach (scandir($path) as $dirElementName) {
+            $dirElementFullName = $path . DS . $dirElementName;
+            if ($dirElementName != '.' && $dirElementName != '..' && is_dir($dirElementFullName)) {
+                $this->removeImage($fileName, $dirElementFullName);
+            }
+        }
+
+    }
 }
