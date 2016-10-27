@@ -48,7 +48,7 @@ class Bystritsky_Action_Adminhtml_ActionsController extends Mage_Adminhtml_Contr
         $id = (int)$this->getRequest()->getParam('id');
 
         $model = Mage::getModel('bystritsky_action/action');
-       // $model->load($id);
+        // $model->load($id);
 
         if ($data = Mage::getSingleton('adminhtml/session')->getFormData()) {
             $model->setData($data)->setId($id);
@@ -80,12 +80,15 @@ class Bystritsky_Action_Adminhtml_ActionsController extends Mage_Adminhtml_Contr
 
             $oldImage = $model->getImage();
             $model->addData($data)->setId($id);
-            if ($selectedProducts = $this->getRequest()->getParam('selected_products', null)) {
-                $selectedProducts = Mage::helper('adminhtml/js')->decodeGridSerializedInput($selectedProducts);
-            } else {
-                $selectedProducts = array();
+            $selectedCheckboxes = $this->getRequest()->getParam('selected_products', null);
+            if (!is_null($selectedCheckboxes)) { // null means product tab was not loaded
+                if ($selectedCheckboxes === '') {  // all checkboxes was unchecked
+                    $selectedProducts = array();
+                } else {
+                    $selectedProducts = Mage::helper('adminhtml/js')->decodeGridSerializedInput($selectedCheckboxes);
+                }
+                $this->updateDependencies($id, $selectedProducts);
             }
-            $this->updateDependencies($id, $selectedProducts);
         }
         try {
             if (isset($_FILES['image']['name']) && $_FILES['image']['name'] != '') {
