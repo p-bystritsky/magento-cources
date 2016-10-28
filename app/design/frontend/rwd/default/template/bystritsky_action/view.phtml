@@ -47,7 +47,7 @@ $helper = Mage::helper('bystritsky_action');
                         $sku = $product->getSku();
                         $link = $product->getProductUrl();
                         $image = $product->getImageUrl();
-                        $price = Mage::helper('core')->currency($product->getPrice(), true, false);
+                        $price = $this->getPriceHtml($product, false);
                         ?>
                         <div class="actions-product">
                             <div class="actions-product-cell"><a href="<?= $link ?>"><?= $name ?></a></div>

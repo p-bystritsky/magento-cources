@@ -1,6 +1,6 @@
 <?php
 
-class Bystritsky_Action_Block_View extends Mage_Core_Block_Template
+class Bystritsky_Action_Block_View extends Mage_Catalog_Block_Product_Abstract //Mage_Core_Block_Template
 {
     public function getAction()
     {
