@@ -26,7 +26,8 @@ $helper = Mage::helper('bystritsky_action');
             </div>
             <div class="start-end">
                 <div class="action-start">
-                    <?= $this->__('From: '); ?><span class="action-start-datetime"><?= $action['start_datetime'] ?></span>
+                    <?= $this->__('From: '); ?><span
+                        class="action-start-datetime"><?= $action['start_datetime'] ?></span>
                 </div>
                 <div class="action-end">
                     <?php if (!empty($action['end_datetime'])): ?>
@@ -40,25 +41,30 @@ $helper = Mage::helper('bystritsky_action');
         <?php if ($products->getSize()): ?>
             <div class="actions-related-products">
                 <?= $this->__('Related products:'); ?>
-                <div class="actions-products">
+                <ul class="products-grid products-grid--max-6-col first last odd">
                     <?php foreach ($products as $product): ?>
                         <?php
+                        $id = $product->getId();
                         $name = $product->getName();
                         $sku = $product->getSku();
                         $link = $product->getProductUrl();
                         $image = $product->getImageUrl();
                         $price = $this->getPriceHtml($product, false);
                         ?>
-                        <div class="actions-product">
-                            <div class="actions-product-cell"><a href="<?= $link ?>"><?= $name ?></a></div>
-                            <div class="actions-product-cell"><?= $sku ?></div>
-                            <div class="actions-product-cell"><a href="<?= $link ?>">
-                                    <img class="actions-product-image" src="<?= $image ?>">
-                                </a></div>
-                            <div class="actions-product-cell"><?= $price ?></div>
-                        </div>
+                        <li class="item last">
+                            <a class="product-image" href="<?= $link ?>">
+                                <img src="<?= $image ?>">
+                            </a>
+                            <div class="product-info">
+                                <h2 class="product-name">
+                                    <a href="<?= $link ?>"><?= $name ?></a>
+                                </h2>
+                                <div><?= $sku ?></div>
+                                <div><?= $price ?></div>
+                            </div>
+                        </li>
                     <?php endforeach; ?>
-                </div>
+                </ul>
             </div>
         <?php endif; ?>
     </div>
