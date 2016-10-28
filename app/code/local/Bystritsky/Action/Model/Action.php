@@ -139,5 +139,9 @@ class Bystritsky_Action_Model_Action extends Mage_Core_Model_Abstract
         return parent::_beforeDelete();
     }
 
+    public function getProductsRelatedToAction($params = null, $fields = null)
+    {
+        return $this->getResource()->getProductsRelatedToAction($this->getId(), $params, $fields);
+    }
 
 }
