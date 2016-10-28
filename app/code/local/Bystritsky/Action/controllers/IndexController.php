@@ -14,7 +14,12 @@ class Bystritsky_Action_IndexController extends Mage_Core_Controller_Front_Actio
         if (empty($id)) {
             $this->_redirect('*/*/index');
         }
-        $this->loadLayout();
-        $this->renderLayout();
+        $action = Mage::getModel('bystritsky_action/action')->load($id);
+        if ($action->getIsActive() && $action->getStatus() == Bystritsky_Action_Model_Action::ACTING) {
+            $this->loadLayout();
+            $this->renderLayout();
+        } else {
+            $this->norouteAction();
+        }
     }
 }

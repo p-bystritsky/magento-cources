@@ -42,10 +42,6 @@ class Bystritsky_Action_Helper_Data extends Mage_Core_Helper_Abstract
         return array_reverse(explode('/', $url))[0];
     }
 
-    public function toLocalTime($dateTime)
-    {
-
-    }
 
     public function getResizedImageUrl($image, $nWidth, $nHeight)
     {
