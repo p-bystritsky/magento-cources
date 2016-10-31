@@ -73,7 +73,7 @@ class Bystritsky_Action_Adminhtml_ActionsController extends Mage_Adminhtml_Contr
             if ($id) {
                 $model->load($id);
             } else {
-                $model->setTemp(1);  // need only to force model to set id
+                $model->setDataChanges(true);  // need only to force model to set id
                 $model->save();
                 $id = $model->getId();
             }
